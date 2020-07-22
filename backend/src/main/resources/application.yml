@@ -17,3 +17,15 @@ spring:
     database-platform: org.hibernate.dialect.MySQL55Dialect
     hibernate:
       ddl-auto: update
+
+assm:
+  app:
+    jwtSecret: jwtAssmSecretKey
+    jwtExpiration: 86400
+
+
+users:
+  defaultAdminLogin: 1@example.com
+  defaultAdminPass: 12345
+  defaultAdminRoleName: superadmin
+  defaultUserRoleName: user

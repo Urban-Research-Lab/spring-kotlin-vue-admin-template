@@ -4,6 +4,8 @@ Simple admin dashboard template, created with Kotlin, Spring Boot, Vue.js and Bo
 
 Feel free to use it to quickly start developing your admin dashboards without need to write any common boilerplate code.
 
+Mostly developed using https://habr.com/ru/post/467161/ tutorial
+
 ### Features ###
 
 * Kotlin + Spring Boot backend service
