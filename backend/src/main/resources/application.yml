@@ -1,0 +1,19 @@
+server:
+  address: 0.0.0.0
+  port: 8060
+
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 3000MB
+      max-request-size: 30000MB
+  datasource:
+    url: jdbc:mysql://localhost:3306/admin_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&useUnicode=yes&characterEncoding=UTF-8
+    driver-class-name: com.mysql.jdbc.Driver
+    username: admin
+    auto-commit: false
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL55Dialect
+    hibernate:
+      ddl-auto: update

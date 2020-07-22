@@ -1,0 +1,3 @@
+rootProject.name = 'kotlin-vue-admin-template'
+include 'backend'
+
