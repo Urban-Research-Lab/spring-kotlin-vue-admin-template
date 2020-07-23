@@ -33,6 +33,7 @@ import("../public/sbadmin/vendor/fontawesome-free/css/all.min.css")
 
 // tmplate init end
 
+import {store} from './storage.js';
 
 const router = new VueRouter({
   routes:  [
@@ -45,5 +46,6 @@ const router = new VueRouter({
 
 new Vue({
   router: router,
+  store: store,
   render: h => h(App)
 }).$mount('#app')
