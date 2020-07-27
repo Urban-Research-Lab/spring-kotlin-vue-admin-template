@@ -5,8 +5,10 @@ import Landing from "./pages/Landing";
 import AdminMain from "./pages/AdminMain";
 import UserList from "./pages/users/UserList";
 import Forbidden from "./pages/errors/Forbidden";
-
+import Vue from 'vue'
 import store from './storage.js';
+
+Vue.use(VueRouter);
 
 const router = new VueRouter({
     routes:  [
@@ -40,13 +42,15 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if(to.matched.some(record => record.meta.requiresPermissions !== undefined)) {
-        if (store.getToken === undefined) {
+        console.log("State: " + store.state)
+        console.log("Token: " + store.state.token)
+        if (store.state.token === undefined) {
             next({
                 path: '/signin',
                 params: { nextUrl: to.fullPath }
             })
         } else {
-            let authorities = store.getAuthorities;
+            let authorities = store.getters.getAuthorities;
             if(to.matched.some(record => record.meta.requiresPermissions.every(permission => authorities.includes(permission)))) {
                 next();
             }else {

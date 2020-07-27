@@ -3,9 +3,17 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
+function loadUser() {
+    try {
+        return JSON.parse(localStorage.getItem('user') || '{}')
+    } catch (e) {
+        return {}
+    }
+}
+
 const state = {
     token: localStorage.getItem('user-token') || '',
-    user: JSON.parse(localStorage.getItem('user') || '{}'),
+    user: loadUser(),
 };
 
 const getters = {
@@ -27,29 +35,31 @@ const getters = {
 };
 
 const mutations = {
-    auth_login: (state, user) => {
-        localStorage.setItem('user-token', user.token);
+    auth_login: (state, {user, token}) => {
+        localStorage.setItem('user-token', token);
         localStorage.setItem('user', JSON.stringify(user));
-        state.token = user.token;
+        state.token = token;
         state.user = user;
+        console.log("Logged in user with token " + token)
     },
     auth_logout: () => {
         state.token = '';
         state.user= {};
         localStorage.removeItem('user-token');
         localStorage.removeItem('user');
-
+        console.log("User logged out")
     }
 };
 
 const actions = {
-    login: (context, user) => {
-        context.commit('auth_login', user)
+    login: (context, {user, token}) => {
+        context.commit('auth_login', {user, token})
     },
     logout: (context) => {
         context.commit('auth_logout');
     }
 };
+
 
 const store = new Vuex.Store({
     state,

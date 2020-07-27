@@ -51,17 +51,26 @@
         },
         methods: {
             login() {
-                Axios.post(`/api/v1/auth/login`, {'email': this.$data.email, 'password': this.$data.password})
+                Axios.post(process.env.VUE_APP_API_URL + `/api/v1/auth/login`, {'email': this.$data.email, 'password': this.$data.password})
                     .then(response => {
-                        this.$store.dispatch('login', {'token': response.data.accessToken, 'roles': response.data.authorities, 'username': response.data.email});
-                        if(this.$route.params.nextUrl != null){
-                            this.$router.push(this.$route.params.nextUrl)
+                        if (response.data.code === 0) {
+                            this.$store.dispatch('login', {
+                                'token': response.data.token,
+                                'user': response.data.user
+                            });
+                            if (this.$route.params.nextUrl != null) {
+                                this.$router.push(this.$route.params.nextUrl)
+                            } else {
+                                this.$router.push('/')
+                            }
                         } else {
-                            this.$router.push('/')
+                            this.$data.alertMessage = response.data.message;
+                            this.showAlert();
                         }
                     }, error => {
                         this.$data.alertMessage = (error.response.data.message.length < 150) ? error.response.data.message : 'Request error. Please, report this error website owners';
-                        console.log(error)
+                        console.log(error);
+                        this.showAlert();
                     })
                     .catch(e => {
                         console.log(e);

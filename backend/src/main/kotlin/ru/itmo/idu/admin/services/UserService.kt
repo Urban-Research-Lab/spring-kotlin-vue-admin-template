@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service
 import ru.itmo.idu.admin.api_classes.LoginRequest
 import ru.itmo.idu.admin.api_classes.UserRegistrationRequest
 import ru.itmo.idu.admin.exceptions.EntityAlreadyExists
+import ru.itmo.idu.admin.exceptions.EntityDoesNotExistException
 import ru.itmo.idu.admin.model.User
 import ru.itmo.idu.admin.repositories.RoleRepository
 import ru.itmo.idu.admin.repositories.UserRepository
+import javax.annotation.PostConstruct
 
 private val log = LoggerFactory.getLogger(UserService::class.java)
 
@@ -24,8 +26,36 @@ class UserService(
         val roleRepository: RoleRepository,
 
         @Value("\${users.defaultUserRoleName}")
-        val newUserRole: String)
+        val newUserRole: String,
+
+        @Value("\${users.defaultAdminLogin}")
+        val defaultAdminLogin: String,
+        @Value("\${users.defaultAdminPass}")
+        val defaultAdminPass: String,
+        @Value("\${users.defaultAdminRoleName}")
+        val defaultAdminRoleName: String
+)
 {
+
+    private fun addDefaultSuperAdmin() {
+        var superAdmin = userRepository.findByEmail(defaultAdminLogin)
+        if (superAdmin == null) {
+            val role = roleRepository.findByName(defaultAdminRoleName)
+                    ?: throw EntityDoesNotExistException("Did not find default admin role")
+            log.info("Creating default admin user {}", defaultAdminLogin)
+            superAdmin = User(
+                    defaultAdminLogin,
+                    passwordEncoder.encode(defaultAdminPass),
+                    mutableListOf(role)
+            )
+            userRepository.save(superAdmin)
+        }
+    }
+
+    @PostConstruct
+    fun setUp() {
+        addDefaultSuperAdmin()
+    }
 
     fun registerUser(userRegistrationRequest: UserRegistrationRequest): User {
         log.info("Creating new user {} {}", userRegistrationRequest.email, userRegistrationRequest.name)

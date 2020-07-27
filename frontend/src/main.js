@@ -1,18 +1,16 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
 import App from './App.vue'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import LoadScript from 'vue-plugin-load-script';
-import store from './storage.js';
 
+import store from './storage.js';
 import router from './router.js'
 
 Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
-Vue.use(VueRouter);
 Vue.use(LoadScript);
 
 // initialize template, some jquery hacks
