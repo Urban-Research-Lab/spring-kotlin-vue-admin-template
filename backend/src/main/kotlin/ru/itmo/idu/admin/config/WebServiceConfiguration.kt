@@ -19,11 +19,11 @@ import org.springframework.web.client.RestTemplate
 @EnableJpaRepositories(basePackages = ["ru.itmo.idu.admin.repositories"])
 @EnableTransactionManagement
 @EnableConfigurationProperties
-@EntityScan("ru.itmo.idu.schools.model")
+@EntityScan("ru.itmo.idu.admin.model")
 @SpringBootApplication(scanBasePackages = ["ru.itmo.idu.admin"])
 @EnableScheduling
 @EnableAsync
-class MapServiceConfiguration {
+class WebServiceConfiguration {
 
     @Bean
     fun objectMapper(): ObjectMapper? {

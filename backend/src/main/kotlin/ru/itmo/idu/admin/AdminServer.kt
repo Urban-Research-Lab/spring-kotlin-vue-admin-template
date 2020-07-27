@@ -4,7 +4,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.Banner
 import org.springframework.boot.builder.SpringApplicationBuilder
-import ru.itmo.idu.admin.config.MapServiceConfiguration
+import ru.itmo.idu.admin.config.WebServiceConfiguration
 
 val log: Logger = LoggerFactory.getLogger("main")
 
@@ -33,7 +33,7 @@ object AdminServer {
     fun main(args: Array<String>) {
         try {
             log.info("Starting Admin Server")
-            val applicationBuilder = SpringApplicationBuilder(MapServiceConfiguration::class.java)
+            val applicationBuilder = SpringApplicationBuilder(WebServiceConfiguration::class.java)
             applicationBuilder.profiles("default")
             applicationBuilder.bannerMode(Banner.Mode.OFF)
             val application = applicationBuilder.build()
