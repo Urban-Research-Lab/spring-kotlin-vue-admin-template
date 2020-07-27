@@ -37,6 +37,7 @@
 
 <script>
     import Axios from 'axios'
+
     export default {
         name: 'SignIn',
         data() {
@@ -53,7 +54,11 @@
                 Axios.post(`/api/v1/auth/login`, {'email': this.$data.email, 'password': this.$data.password})
                     .then(response => {
                         this.$store.dispatch('login', {'token': response.data.accessToken, 'roles': response.data.authorities, 'username': response.data.email});
-                        this.$router.push('/')
+                        if(this.$route.params.nextUrl != null){
+                            this.$router.push(this.$route.params.nextUrl)
+                        } else {
+                            this.$router.push('/')
+                        }
                     }, error => {
                         this.$data.alertMessage = (error.response.data.message.length < 150) ? error.response.data.message : 'Request error. Please, report this error website owners';
                         console.log(error)
