@@ -15,10 +15,7 @@
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                    <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-                </a>
+                <UserProfileButton id="userDropdown"></UserProfileButton>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                     <a class="dropdown-item" href="#">
@@ -49,8 +46,11 @@
 </template>
 
 <script>
+    import UserProfileButton from "./UserProfileButton";
+
     export default {
-        name: "TopPanel"
+        name: "TopPanel",
+        components: {UserProfileButton}
     }
 </script>
 

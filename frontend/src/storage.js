@@ -21,7 +21,7 @@ const getters = {
         return state.token != null && state.token != '';
     },
     getUsername: state => {
-        return state.user.username !== null ? state.user.username : state.user.email;
+        return state.user.username !== undefined ? state.user.username : state.user.email;
     },
     getEmail: state => {
         return state.user.email;
@@ -40,14 +40,12 @@ const mutations = {
         localStorage.setItem('user', JSON.stringify(user));
         state.token = token;
         state.user = user;
-        console.log("Logged in user with token " + token)
     },
     auth_logout: () => {
         state.token = '';
         state.user= {};
         localStorage.removeItem('user-token');
         localStorage.removeItem('user');
-        console.log("User logged out")
     }
 };
 
