@@ -42,8 +42,6 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if(to.matched.some(record => record.meta.requiresPermissions !== undefined)) {
-        console.log("State: " + store.state)
-        console.log("Token: " + store.state.token)
         if (store.state.token === undefined) {
             next({
                 path: '/signin',

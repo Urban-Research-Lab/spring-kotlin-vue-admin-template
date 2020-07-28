@@ -49,6 +49,12 @@
                 alertMessage: 'Request error',
             }
         },
+        mounted() {
+            if (this.$route.query.logout != null) {
+                this.$data.alertMessage = "You have been logged out";
+                this.showAlert();
+            }
+        },
         methods: {
             login() {
                 Axios.post(process.env.VUE_APP_API_URL + `/api/v1/auth/login`, {'email': this.$data.email, 'password': this.$data.password})
