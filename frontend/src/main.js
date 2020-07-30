@@ -7,11 +7,13 @@ import LoadScript from 'vue-plugin-load-script';
 
 import store from './storage.js';
 import router from './router.js'
+import {Vuelidate} from "vuelidate";
 
 Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
 Vue.use(LoadScript);
+Vue.use(Vuelidate);
 
 // initialize template, some jquery hacks
 

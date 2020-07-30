@@ -22,11 +22,12 @@
                             <b-col>
                                 <b-form-input
                                         id="newNameInput"
-                                        v-model="updateUserForm.newName"
+                                        v-model="newName"
                                         type="text"
                                         required
                                         placeholder="Enter your name"
                                 ></b-form-input>
+
                             </b-col>
                         </b-row>
 
@@ -41,21 +42,22 @@
             <b-card
                     title="Change password">
                 <b-card-body>
-                    <b-row>
+                    <b-row class="mb-1">
                         <b-col>
                             New Password
                         </b-col>
                         <b-col>
                             <b-form-input
                                     id="newPasswordInput"
-                                    v-model="updatePasswordForm.newPassword"
+                                    v-model="newPassword"
                                     type="password"
                                     required
                                     placeholder="Enter new password"
                             ></b-form-input>
+                            <span v-if="!$v.newPassword.minLength" class="text-danger">At least 4 characters.</span>
                         </b-col>
                     </b-row>
-                    <b-row>
+                    <b-row class="mb-1">
                         <b-col>
                             Confirm Password
                         </b-col>
@@ -67,6 +69,8 @@
                                     required
                                     placeholder="Repeat new password"
                             ></b-form-input>
+                            <span v-if="!$v.passwordConfirmation.sameAsPassword" class="text-danger">
+                                Passwords do not match.</span>
                         </b-col>
                     </b-row>
                 </b-card-body>
@@ -78,16 +82,14 @@
 </template>
 
 <script>
+    import {minLength, required, sameAs} from 'vuelidate/lib/validators'
+
     export default {
         name: "ProfilePage",
         data() {
             return {
-                updateUserForm: {
-                    newName: this.displayName
-                },
-                updatePasswordForm: {
-                    newPassword: null
-                },
+                newName: this.displayName,
+                newPassword: null,
                 passwordConfirmation: null
             }
         },
@@ -102,13 +104,39 @@
         methods: {
             onProfileUpdate(evt) {
                 evt.preventDefault();
-                alert(JSON.stringify(this.updateUserForm));
+                this.$v.$touch();
+                if (this.$v.newName.$invalid) {
+                    alert("Error")
+                } else {
+                    alert("User Updated")
+                }
             },
 
             onPasswordUpdate(evt) {
                 evt.preventDefault();
-                alert(JSON.stringify(this.updatePasswordForm));
+                this.$v.$touch();
+                if (this.$v.passwordConfirmation.$invalid || this.$v.newPassword.$invalid) {
+                    alert("Error")
+                } else {
+                    alert("Password Updated")
+                }
             }
+        },
+        validations: {
+            newName: {
+                required,
+                minLength: minLength(1)
+            },
+
+            newPassword: {
+                required,
+                minLength: minLength(4)
+            },
+            passwordConfirmation: {
+                required,
+                minLength: minLength(4),
+                sameAsPassword: sameAs('newPassword')
+            },
         }
     }
 </script>
