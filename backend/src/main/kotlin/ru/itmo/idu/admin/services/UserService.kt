@@ -1,12 +1,15 @@
 package ru.itmo.idu.admin.services
 
+import com.nimbusds.oauth2.sdk.util.StringUtils
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.data.domain.PageRequest
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import ru.itmo.idu.admin.api_classes.LoginRequest
 import ru.itmo.idu.admin.api_classes.UserRegistrationRequest
+import ru.itmo.idu.admin.api_classes.UserUpdateRequest
 import ru.itmo.idu.admin.exceptions.EntityAlreadyExists
 import ru.itmo.idu.admin.exceptions.EntityDoesNotExistException
 import ru.itmo.idu.admin.model.User
@@ -86,5 +89,26 @@ class UserService(
     fun checkLogin(loginRequest: LoginRequest): User? {
         val user = userRepository.findByEmail(loginRequest.email) ?: return null
         return if (passwordEncoder.matches(loginRequest.password, user.password)) user else null
+    }
+
+    fun getUsers(page: Int, size: Int): List<User> {
+        return userRepository.findAll(PageRequest.of(page, size)).toList()
+    }
+
+    fun getUser(id: Long): User {
+        return userRepository.findById(id).orElseThrow{EntityDoesNotExistException("User $id not found")}
+    }
+
+    fun updateUser(id: Long, request: UserUpdateRequest): User {
+        //todo check rights
+        var currentUser = getUser(id)
+        if (StringUtils.isNotBlank(request.newName)) {
+            currentUser.displayName = request.newName;
+        }
+        if (StringUtils.isNotBlank(request.newPassword)) {
+            currentUser.password = passwordEncoder.encode(request.newPassword)
+        }
+        currentUser = userRepository.save(currentUser)
+        return currentUser
     }
 }

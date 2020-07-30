@@ -15,7 +15,10 @@ data class UserRegistrationRequest(
         @NotEmpty
         var email: String,
         @NotEmpty
-        var password: String,
-        @NotEmpty
-        var passwordConfirmation: String
+        var password: String
+)
+
+data class UserUpdateRequest(
+        val newName: String?,
+        val newPassword: String?
 )

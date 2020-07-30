@@ -7,6 +7,7 @@ import UserList from "./pages/users/UserList";
 import Forbidden from "./pages/errors/Forbidden";
 import Vue from 'vue'
 import store from './storage.js';
+import ProfilePage from "./pages/users/ProfilePage";
 
 Vue.use(VueRouter);
 
@@ -16,6 +17,14 @@ const router = new VueRouter({
             path: '/',
             component: AdminMain,
             children: [{component: Dashboard, path: ''}],
+            meta: {
+                requiresPermissions: []
+            }
+        },
+        {
+            path: '/profile',
+            component: AdminMain,
+            children: [{component: ProfilePage, path: ''}],
             meta: {
                 requiresPermissions: []
             }
