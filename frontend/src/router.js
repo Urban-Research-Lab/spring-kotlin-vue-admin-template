@@ -8,6 +8,7 @@ import Forbidden from "./pages/errors/Forbidden";
 import Vue from 'vue'
 import store from './storage.js';
 import ProfilePage from "./pages/users/ProfilePage";
+import NotFound from "./pages/errors/NotFound";
 
 Vue.use(VueRouter);
 
@@ -45,6 +46,13 @@ const router = new VueRouter({
         },
         {
             path: '/403', component: Forbidden
+        },
+        {
+            path: "/404", component: NotFound
+        },
+        {
+            path: '*',
+            redirect: '/404'
         }
     ]
 });
