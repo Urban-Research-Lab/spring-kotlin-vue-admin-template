@@ -14,7 +14,7 @@
 
                 </div>
 
-                <Footer></Footer>
+                <PageFooter></PageFooter>
             </div>
         </div>
         <LogoutModal></LogoutModal>
@@ -25,10 +25,11 @@
     import TopPanel from '../components/TopPanel'
     import SidePanel from "../components/SidePanel";
     import LogoutModal from "../components/modals/LogoutModal";
+    import PageFooter from "../components/PageFooter";
 
     export default {
         name: "AdminMain",
-        components: {LogoutModal, SidePanel, TopPanel}
+        components: {PageFooter, LogoutModal, SidePanel, TopPanel}
     }
 </script>
 
