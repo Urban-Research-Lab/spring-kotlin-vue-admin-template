@@ -99,6 +99,10 @@ class UserService(
         return userRepository.findById(id).orElseThrow{EntityDoesNotExistException("User $id not found")}
     }
 
+    fun countUsers(): Long {
+        return userRepository.count()
+    }
+
     fun updateUser(id: Long, request: UserUpdateRequest): User {
         //todo check rights
         var currentUser = getUser(id)

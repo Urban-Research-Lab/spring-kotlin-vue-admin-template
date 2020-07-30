@@ -27,6 +27,16 @@ class IdResponse(val id: Long, code: Int, message: String)
     constructor(id: Long): this(id, ResponseCodes.OK)
 }
 
+class NumberResponse(val number: Long, code: Int, message: String)
+    : BaseResponse(code, message) {
+
+    constructor(rc: ResponseCodes) : this(0, rc.code, rc.message)
+
+    constructor(number: Long, rc: ResponseCodes) : this(number, rc.code, rc.message)
+
+    constructor(number: Long): this(number, ResponseCodes.OK)
+}
+
 class StringResponse(val result: String?, code: Int, message: String)
     : BaseResponse(code, message) {
 

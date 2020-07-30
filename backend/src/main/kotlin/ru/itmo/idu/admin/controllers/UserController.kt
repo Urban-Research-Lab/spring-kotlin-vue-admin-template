@@ -2,11 +2,9 @@ package ru.itmo.idu.admin.controllers
 
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
-import ru.itmo.idu.admin.api_classes.ObjectListResponse
-import ru.itmo.idu.admin.api_classes.ObjectResponse
-import ru.itmo.idu.admin.api_classes.UserRegistrationRequest
-import ru.itmo.idu.admin.api_classes.UserUpdateRequest
+import ru.itmo.idu.admin.api_classes.*
 import ru.itmo.idu.admin.api_classes.dto.UserDTO
 import ru.itmo.idu.admin.services.UserService
 
@@ -48,6 +46,15 @@ class UserController(
         return ObjectResponse(UserDTO.fromUser(user))
     }
 
+    @PreAuthorize("hasAuthority('MANAGE_USERS')")
+    @GetMapping("/count")
+    fun countUsers(): NumberResponse {
+        log.info("countUsers()")
+        val count = userService.countUsers()
+        return NumberResponse(count)
+    }
+
+    @PreAuthorize("hasAuthority('MANAGE_USERS')")
     @GetMapping("/list")
     fun listUsers(
             @RequestParam(required = false, defaultValue = "0") page: Int,
