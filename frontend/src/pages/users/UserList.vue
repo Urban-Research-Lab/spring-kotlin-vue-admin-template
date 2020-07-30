@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div>
         <b-row>
             <b-col>
@@ -10,7 +10,13 @@
                 <b-table id="users-table" striped hover
                          :items="itemProvider"
                          :per-page="15"
-                ></b-table>
+                         :fields="fields"
+                >
+                    <template v-slot:cell(registrationTimestamp)="data">
+                        {{ new Date(data.value).toLocaleDateString() }}
+                    </template>
+
+                </b-table>
                 <b-pagination
                         v-model="currentPage"
                         :total-rows="rows"
@@ -31,7 +37,8 @@
         data() {
             return {
                 currentPage: 1,
-                rows: 0
+                rows: 0,
+                fields: ["id", "email", "name", "roles", "registrationTimestamp"]
             }
         },
         mixins: [UserAPI],
