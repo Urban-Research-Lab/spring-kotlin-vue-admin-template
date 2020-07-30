@@ -9,7 +9,6 @@ import ru.itmo.idu.admin.api_classes.UserRegistrationRequest
 import ru.itmo.idu.admin.api_classes.UserUpdateRequest
 import ru.itmo.idu.admin.api_classes.dto.UserDTO
 import ru.itmo.idu.admin.services.UserService
-import javax.websocket.server.PathParam
 
 private val log = LoggerFactory.getLogger(UserController::class.java)
 
@@ -30,9 +29,9 @@ class UserController(
         return ObjectResponse(UserDTO.fromUser(user))
     }
 
-    @PostMapping("/id")
+    @PostMapping("/{id}")
     fun updateUser(
-            @PathParam("id") id: Long,
+            @PathVariable("id") id: Long,
             @RequestBody request: UserUpdateRequest
     ): ObjectResponse {
         log.info("updateUser(id = {}, request = {})", id, request)
@@ -42,7 +41,7 @@ class UserController(
 
     @GetMapping("/{id}")
     fun getUser(
-       @PathParam("id") id: Long
+       @PathVariable("id") id: Long
     ): ObjectResponse {
         log.info("getUser(id = {})", id)
         val user = userService.getUser(id)

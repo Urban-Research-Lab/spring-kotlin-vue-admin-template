@@ -18,13 +18,16 @@ const state = {
 
 const getters = {
     isAuthenticated: state => {
-        return state.token != null && state.token != '';
+        return state.token != null && state.token !== '';
     },
     getUsername: state => {
-        return state.user.username !== undefined ? state.user.username : state.user.email;
+        return state.user.name !== undefined ? state.user.name : state.user.email;
     },
     getEmail: state => {
         return state.user.email;
+    },
+    getUserId: state => {
+        return state.user.id;
     },
     getAuthorities: state => {
         return state.user.authorities;
@@ -46,6 +49,10 @@ const mutations = {
         state.user= {};
         localStorage.removeItem('user-token');
         localStorage.removeItem('user');
+    },
+    update_user: (state, user) => {
+        localStorage.setItem('user', JSON.stringify(user));
+        state.user = user;
     }
 };
 
@@ -55,6 +62,9 @@ const actions = {
     },
     logout: (context) => {
         context.commit('auth_logout');
+    },
+    updateUser: (context, user) => {
+        context.commit('update_user', user)
     }
 };
 

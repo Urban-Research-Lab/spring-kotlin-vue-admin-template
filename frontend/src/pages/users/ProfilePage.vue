@@ -83,12 +83,14 @@
 
 <script>
     import {minLength, required, sameAs} from 'vuelidate/lib/validators'
+    import toastMixin from "../../mixins/toast";
+    import UserAPI from "../../mixins/UserAPI";
 
     export default {
         name: "ProfilePage",
         data() {
             return {
-                newName: this.displayName,
+                newName: this.$store.state.user.name,
                 newPassword: null,
                 passwordConfirmation: null
             }
@@ -101,25 +103,23 @@
                 return this.$store.state.user.name;
             }
         },
+        mixins: [
+            toastMixin,
+            UserAPI
+        ],
         methods: {
             onProfileUpdate(evt) {
                 evt.preventDefault();
-                this.$v.$touch();
-                if (this.$v.newName.$invalid) {
-                    alert("Error")
-                } else {
-                    alert("User Updated")
-                }
+                this.updateUser(this.$store.getters.getUserId, {'newName': this.$data.newName});
             },
 
             onPasswordUpdate(evt) {
                 evt.preventDefault();
                 this.$v.$touch();
                 if (this.$v.passwordConfirmation.$invalid || this.$v.newPassword.$invalid) {
-                    alert("Error")
-                } else {
-                    alert("Password Updated")
+                    return;
                 }
+                this.updateUser(this.$store.getters.getUserId, {'newPassword': this.$data.newPassword});
             }
         },
         validations: {
