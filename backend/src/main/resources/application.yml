@@ -29,3 +29,6 @@ users:
   defaultAdminPass: 12345
   defaultAdminRoleName: superadmin
   defaultUserRoleName: user
+
+log:
+  entries: 100

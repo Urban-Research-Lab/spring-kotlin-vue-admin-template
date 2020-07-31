@@ -8,7 +8,8 @@ import javax.persistence.*
  */
 enum class Permission {
     MANAGE_USERS,
-    MANAGE_ROLES
+    MANAGE_ROLES,
+    SERVER_ADMIN
 }
 
 /**

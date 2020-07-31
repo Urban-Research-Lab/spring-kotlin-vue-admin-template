@@ -9,6 +9,7 @@ import Vue from 'vue'
 import store from './storage.js';
 import ProfilePage from "./pages/users/ProfilePage";
 import NotFound from "./pages/errors/NotFound";
+import ServerLogs from "./pages/admin/ServerLogs";
 
 Vue.use(VueRouter);
 
@@ -36,6 +37,14 @@ const router = new VueRouter({
             children: [{component: UserList, path: ''}],
             meta: {
                 requiresPermissions: ['MANAGE_USERS']
+            }
+        },
+        {
+          path: "/server_logs",
+            component: AdminMain,
+            children: [{component: ServerLogs, path: ''}],
+            meta: {
+                requiresPermissions: ['SERVER_ADMIN']
             }
         },
         {
