@@ -9,7 +9,7 @@
                     <TopPanel></TopPanel>
 
                     <div class="container-fluid">
-                        <router-view></router-view>
+                        <router-view ref="child"></router-view>
                     </div>
 
                 </div>
@@ -30,6 +30,17 @@
     export default {
         name: "AdminMain",
         components: {PageFooter, LogoutModal, SidePanel, TopPanel},
+
+        beforeRouteEnter (to, from, next) {
+            next(vm => {
+                // hack: use this hardcoded method to force refresh chld component data when its shown again
+                // since vue-router does not recreate components but reuses old ones
+                if (vm.$refs.child.updateData !== undefined) {
+                    vm.$refs.child.updateData()
+                }
+            })
+        }
+
 
     }
 </script>

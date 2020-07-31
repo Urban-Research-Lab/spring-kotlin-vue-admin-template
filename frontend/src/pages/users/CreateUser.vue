@@ -97,7 +97,7 @@
            this.availableRoles = (await this.getRoles()).map(i => {return {text: i.name, value: i.id}})
         },
         methods: {
-            onUserCreate(evt) {
+            async onUserCreate(evt) {
                 evt.preventDefault();
                 let request = {
                     name: this.name,
@@ -106,7 +106,7 @@
                     roles: this.roles
                 };
 
-                let result = this.registerUser(request);
+                let result = await this.registerUser(request);
                 if (result) {
                     this.$router.push('/users')
                 }

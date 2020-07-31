@@ -49,6 +49,7 @@
             async itemProvider(ctx) {
                 return this.listUsers(ctx.currentPage - 1, ctx.perPage)
             },
+            // called by parent component
             async updateData() {
                 this.currentPage = await this.countUsers()
             }
