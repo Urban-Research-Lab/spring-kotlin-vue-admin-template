@@ -68,14 +68,15 @@ class UserService(
             throw EntityAlreadyExists("User already exists")
         }
 
-        val role = roleRepository.findByName(newUserRole)
+        // todo: prevent from assigning some roles?
+        val roles = userRegistrationRequest.roles.map { roleRepository.findById(it).orElseThrow{EntityDoesNotExistException("Role does not exist")} }
 
         var user = User(
                 0,
                 userRegistrationRequest.email,
                 userRegistrationRequest.name,
                 passwordEncoder.encode(userRegistrationRequest.password),
-                mutableListOf(role!!),
+                roles.toMutableList(),
                 System.currentTimeMillis()
         )
         user = userRepository.save(user)

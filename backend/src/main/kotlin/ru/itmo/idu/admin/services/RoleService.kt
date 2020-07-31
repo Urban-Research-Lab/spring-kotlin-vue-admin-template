@@ -42,4 +42,8 @@ class RoleService (
 
         roleRepository.save(defaultAdminRole)
     }
+
+    fun listRoles(): MutableList<Role> {
+        return roleRepository.findAll()
+    }
 }

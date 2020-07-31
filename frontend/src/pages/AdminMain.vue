@@ -29,7 +29,8 @@
 
     export default {
         name: "AdminMain",
-        components: {PageFooter, LogoutModal, SidePanel, TopPanel}
+        components: {PageFooter, LogoutModal, SidePanel, TopPanel},
+
     }
 </script>
 

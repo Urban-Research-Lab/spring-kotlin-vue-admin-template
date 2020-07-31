@@ -4,6 +4,9 @@
             <b-col>
                 <h1>Users</h1>
             </b-col>
+            <b-col class="flex-row-reverse">
+                <b-button variant="success" to="/create_user"><i class="fa fa-user-plus"></i> Create User</b-button>
+            </b-col>
         </b-row>
         <b-row>
             <b-col>
@@ -45,10 +48,13 @@
         methods: {
             async itemProvider(ctx) {
                 return this.listUsers(ctx.currentPage - 1, ctx.perPage)
+            },
+            async updateData() {
+                this.currentPage = await this.countUsers()
             }
         },
         async mounted() {
-           this.currentPage = await this.countUsers()
+           this.updateData()
         }
     }
 </script>

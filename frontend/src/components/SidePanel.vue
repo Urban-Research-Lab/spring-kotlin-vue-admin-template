@@ -33,7 +33,7 @@
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <b-link class="collapse-item" to="/users">List Users</b-link>
-                    <a class="collapse-item" href="#">Create User</a>
+                    <b-link class="collapse-item" to="/create_user">Create User</b-link>
                 </div>
             </div>
         </li>

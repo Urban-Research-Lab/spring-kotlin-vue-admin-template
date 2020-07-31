@@ -15,7 +15,8 @@ data class UserRegistrationRequest(
         @NotEmpty
         var email: String,
         @NotEmpty
-        var password: String
+        var password: String,
+        val roles: List<Long>
 )
 
 data class UserUpdateRequest(

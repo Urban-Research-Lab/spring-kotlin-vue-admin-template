@@ -3,6 +3,17 @@ import toastMixin from "./toast";
 
 const UserAPI = {
     methods: {
+        async registerUser(registerRequest) {
+            let response = await Axios.post(process.env.VUE_APP_API_URL + `/api/v1/user/new`, registerRequest);
+            if (response.data.code === 0) {
+                this.successToast("User created")
+                return true;
+            }
+
+            this.errorToast(`Failed to fetch user list: ` + response);
+            return false
+        },
+
         updateUser(userId, updateRequest) {
             Axios.post(process.env.VUE_APP_API_URL + `/api/v1/user/${userId}`,
                 updateRequest)

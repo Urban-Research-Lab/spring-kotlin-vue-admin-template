@@ -10,6 +10,7 @@ import store from './storage.js';
 import ProfilePage from "./pages/users/ProfilePage";
 import NotFound from "./pages/errors/NotFound";
 import ServerLogs from "./pages/admin/ServerLogs";
+import CreateUser from "./pages/users/CreateUser";
 
 Vue.use(VueRouter);
 
@@ -35,6 +36,13 @@ const router = new VueRouter({
             path: '/users',
             component: AdminMain,
             children: [{component: UserList, path: ''}],
+            meta: {
+                requiresPermissions: ['MANAGE_USERS']
+            }
+        },{
+            path: '/create_user',
+            component: AdminMain,
+            children: [{component: CreateUser, path: ''}],
             meta: {
                 requiresPermissions: ['MANAGE_USERS']
             }

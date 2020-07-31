@@ -3,6 +3,7 @@ package ru.itmo.idu.admin.controllers
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
+import ru.itmo.idu.admin.api_classes.ObjectListResponse
 import ru.itmo.idu.admin.api_classes.ObjectResponse
 import ru.itmo.idu.admin.api_classes.dto.RoleDTO
 import ru.itmo.idu.admin.services.RoleService
@@ -29,8 +30,11 @@ class RolesController(
         TODO()
     }
 
-    fun listRoles() {
-        TODO()
+    @GetMapping("/list")
+    fun listRoles(): ObjectListResponse {
+        return ObjectListResponse(
+                roleService.listRoles().map { RoleDTO.fromRole(it) }
+        )
     }
 
     fun createRole() {
