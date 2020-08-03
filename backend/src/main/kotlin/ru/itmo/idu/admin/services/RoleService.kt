@@ -4,6 +4,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
+import ru.itmo.idu.admin.exceptions.EntityDoesNotExistException
 import ru.itmo.idu.admin.model.Permission
 import ru.itmo.idu.admin.model.Role
 import ru.itmo.idu.admin.repositories.RoleRepository
@@ -45,5 +46,14 @@ class RoleService (
 
     fun listRoles(): MutableList<Role> {
         return roleRepository.findAll()
+    }
+
+    fun findByName(name: String): Role {
+        return roleRepository.findByName(name)
+                ?: throw EntityDoesNotExistException("Did not find role $name")
+    }
+
+    fun findById(id: Long): Role {
+        return roleRepository.findById(id).orElseThrow { EntityDoesNotExistException("Did not find role $id") }
     }
 }

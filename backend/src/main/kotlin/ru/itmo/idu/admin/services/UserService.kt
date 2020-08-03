@@ -13,7 +13,6 @@ import ru.itmo.idu.admin.api_classes.UserUpdateRequest
 import ru.itmo.idu.admin.exceptions.EntityAlreadyExists
 import ru.itmo.idu.admin.exceptions.EntityDoesNotExistException
 import ru.itmo.idu.admin.model.User
-import ru.itmo.idu.admin.repositories.RoleRepository
 import ru.itmo.idu.admin.repositories.UserRepository
 import javax.annotation.PostConstruct
 
@@ -26,7 +25,7 @@ class UserService(
         @Autowired
         val passwordEncoder: PasswordEncoder,
         @Autowired
-        val roleRepository: RoleRepository,
+        val roleService: RoleService,
 
         @Value("\${users.defaultUserRoleName}")
         val newUserRole: String,
@@ -43,8 +42,7 @@ class UserService(
     private fun addDefaultSuperAdmin() {
         var superAdmin = userRepository.findByEmail(defaultAdminLogin)
         if (superAdmin == null) {
-            val role = roleRepository.findByName(defaultAdminRoleName)
-                    ?: throw EntityDoesNotExistException("Did not find default admin role")
+            val role = roleService.findByName(defaultAdminRoleName)
             log.info("Creating default admin user {}", defaultAdminLogin)
             superAdmin = User(
                     defaultAdminLogin,
@@ -69,7 +67,7 @@ class UserService(
         }
 
         // todo: prevent from assigning some roles?
-        val roles = userRegistrationRequest.roles.map { roleRepository.findById(it).orElseThrow{EntityDoesNotExistException("Role does not exist")} }
+        val roles = userRegistrationRequest.roles.map { roleService.findById(it) }
 
         var user = User(
                 0,
