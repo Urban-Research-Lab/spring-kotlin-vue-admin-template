@@ -25,5 +25,10 @@ data class Role(
         var name: String,
 
         @ElementCollection(fetch = FetchType.EAGER)
-        var permissions: MutableList<Permission>
-)
+        var permissions: MutableList<Permission>,
+
+        @ManyToMany
+        val users: List<User>
+) {
+    constructor(name: String, permissions: MutableList<Permission>): this(0, name, permissions, listOf())
+}

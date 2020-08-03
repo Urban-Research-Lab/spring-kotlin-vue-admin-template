@@ -4,10 +4,13 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
+import ru.itmo.idu.admin.api_classes.BaseResponse
 import ru.itmo.idu.admin.api_classes.ObjectListResponse
 import ru.itmo.idu.admin.api_classes.ObjectResponse
+import ru.itmo.idu.admin.api_classes.ResponseCodes
 import ru.itmo.idu.admin.api_classes.dto.CreateRoleRequest
 import ru.itmo.idu.admin.api_classes.dto.RoleDTO
+import ru.itmo.idu.admin.api_classes.dto.UpdateRoleRequest
 import ru.itmo.idu.admin.model.Permission
 import ru.itmo.idu.admin.services.RoleService
 
@@ -29,10 +32,19 @@ class RolesController(
     @PostMapping("/{id}")
     fun updateRole(
             @PathVariable("id") id: Long,
-            @RequestBody updated: RoleDTO
+            @RequestBody request: UpdateRoleRequest
 
     ): ObjectResponse {
-        TODO()
+        log.info("updateRole(id = {}, request = {})")
+        val result = roleService.updateRole(id, request)
+        return ObjectResponse(RoleDTO.fromRole(result))
+    }
+
+    @DeleteMapping("/{id}")
+    fun deleteRole(@PathVariable("id") id: Long): BaseResponse {
+        log.info("deleteRole(id = {})")
+        roleService.deleteRole(id)
+        return BaseResponse(ResponseCodes.OK)
     }
 
     @GetMapping("/list")
@@ -52,10 +64,6 @@ class RolesController(
         log.info("createRole(request = {})", request)
         val role = roleService.createRole(request)
         return ObjectResponse(RoleDTO.fromRole(role))
-    }
-
-    fun createRole() {
-        TODO()
     }
 
 }

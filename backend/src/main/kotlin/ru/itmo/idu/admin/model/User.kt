@@ -24,7 +24,7 @@ data class User(
         @Column(length = 60)
         var password: String,
 
-        @ManyToMany(fetch = FetchType.EAGER)
+        @ManyToMany(fetch = FetchType.EAGER, mappedBy = "users")
         var roles: MutableList<Role>,
 
         @Column
