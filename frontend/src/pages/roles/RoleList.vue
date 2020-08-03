@@ -54,9 +54,9 @@
                 this.$router.push("/roles/" + item.id)
             },
 
-            deleteRoleClicked(item) {
+            async deleteRoleClicked(item) {
                 if (confirm("Do you really want to delete this item?")) {
-                    this.deleteRole(item.id);
+                    await this.deleteRole(item.id);
                     this.updateData();
                 }
             }
