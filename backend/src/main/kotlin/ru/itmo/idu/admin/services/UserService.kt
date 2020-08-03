@@ -117,8 +117,26 @@ class UserService(
         if (StringUtils.isNotBlank(request.newPassword)) {
             currentUser.password = passwordEncoder.encode(request.newPassword)
         }
+        if (request.newRoles != null) {
+            // todo: prevent from assigning some roles?
+            val roles = request.newRoles.map { roleService.findById(it) }.toMutableSet()
+            val rolesToRemove = currentUser.roles.filter { roles.contains(it) }
+            currentUser.roles.removeAll(rolesToRemove)
+            rolesToRemove.forEach { it.users.remove(currentUser) }
+            roleService.save(rolesToRemove)
+
+            val newRoles = roles.filter { !currentUser.roles.contains(it) }
+            currentUser.roles.addAll(newRoles)
+            newRoles.forEach { it.users.add(currentUser) }
+            roleService.save(newRoles)
+        }
         currentUser = userRepository.save(currentUser)
         return currentUser
+    }
+
+    fun deleteUser(id: Long) {
+        userRepository.delete(getUser(id))
+        log.info("User {} deleted", id)
     }
 
 

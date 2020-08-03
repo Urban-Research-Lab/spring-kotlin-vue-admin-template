@@ -14,9 +14,19 @@
                          :items="itemProvider"
                          :per-page="15"
                          :fields="fields"
+                         ref="table"
                 >
                     <template v-slot:cell(registrationTimestamp)="data">
                         {{ new Date(data.value).toLocaleDateString() }}
+                    </template>
+
+                    <template v-slot:cell(actions)="row">
+                        <b-button size="sm" @click="editUserClicked(row.item)" class="btn-primary mr-1">
+                            <i class="fa fa-edit"></i> Edit
+                        </b-button>
+                        <b-button size="sm" @click="deleteUserClicked(row.item)" class="btn-danger">
+                            <i class="fa fa-trash"></i> Delete
+                        </b-button>
                     </template>
 
                 </b-table>
@@ -41,7 +51,7 @@
             return {
                 currentPage: 1,
                 rows: 0,
-                fields: ["id", "email", "name", "roles", "registrationTimestamp"]
+                fields: ["id", "email", "name", "roles", "registrationTimestamp", "actions"]
             }
         },
         mixins: [UserAPI],
@@ -52,6 +62,17 @@
             // called by parent component
             async updateData() {
                 this.currentPage = await this.countUsers()
+                this.$refs.table.refresh();
+            },
+            editUserClicked(item) {
+                this.$router.push("/users/" + item.id)
+            },
+
+            async deleteUserClicked(item) {
+                if (confirm("Do you really want to delete this item?")) {
+                    await this.deleteUser(item.id);
+                    this.updateData();
+                }
             }
         },
         async mounted() {

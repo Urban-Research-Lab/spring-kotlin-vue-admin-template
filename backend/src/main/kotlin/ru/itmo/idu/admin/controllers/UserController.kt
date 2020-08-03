@@ -37,6 +37,14 @@ class UserController(
         return ObjectResponse(UserDTO.fromUser(updated))
     }
 
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('MANAGE_USERS')")
+    fun deleteUser(@PathVariable("id") id: Long): BaseResponse {
+        log.info("deleteUser(id = {})", id)
+        userService.deleteUser(id)
+        return BaseResponse(ResponseCodes.OK)
+    }
+
     @GetMapping("/{id}")
     fun getUser(
        @PathVariable("id") id: Long

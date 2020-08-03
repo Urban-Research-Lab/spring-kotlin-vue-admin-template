@@ -14,6 +14,7 @@ import CreateUser from "./pages/users/CreateUser";
 import RoleList from "./pages/roles/RoleList";
 import CreateRole from "./pages/roles/CreateRole";
 import EditRole from "./pages/roles/EditRole";
+import EditUser from "./pages/users/EditUser";
 
 Vue.use(VueRouter);
 
@@ -36,6 +37,13 @@ const router = new VueRouter({
             }
         },
         {
+            path: '/users/:id',
+            component: AdminMain,
+            children: [{component: EditUser, path: '', props: true}],
+            meta: {
+                requiresPermissions: ['MANAGE_USERS']
+            }
+        }, {
             path: '/users',
             component: AdminMain,
             children: [{component: UserList, path: ''}],

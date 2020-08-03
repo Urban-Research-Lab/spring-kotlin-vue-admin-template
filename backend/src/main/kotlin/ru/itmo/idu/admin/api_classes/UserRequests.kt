@@ -21,5 +21,6 @@ data class UserRegistrationRequest(
 
 data class UserUpdateRequest(
         val newName: String?,
-        val newPassword: String?
+        val newPassword: String?,
+        val newRoles: List<Long>?
 )

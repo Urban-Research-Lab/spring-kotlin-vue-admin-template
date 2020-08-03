@@ -41,6 +41,17 @@ const UserAPI = {
             return []
         },
 
+        async deleteUser(id) {
+            let response = await Axios.delete(process.env.VUE_APP_API_URL + `/api/v1/user/${id}`);
+            if (response.data.code === 0) {
+                this.successToast("User deleted");
+                return true;
+            }
+
+            this.errorToast(`Failed to delete user: ` + response);
+            return false
+        },
+
         async countUsers() {
             let response = await Axios.get(process.env.VUE_APP_API_URL + `/api/v1/user/count`);
             if (response.data.code === 0) {
