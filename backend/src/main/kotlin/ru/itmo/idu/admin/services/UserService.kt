@@ -50,6 +50,8 @@ class UserService(
                     mutableListOf(role)
             )
             userRepository.save(superAdmin)
+            role.users.add(superAdmin)
+            roleService.save(role)
         }
     }
 
@@ -77,6 +79,10 @@ class UserService(
                 roles.toMutableList(),
                 System.currentTimeMillis()
         )
+        for (role in roles) {
+            role.users.add(user)
+        }
+        roleService
         user = userRepository.save(user)
         log.info("User {} created", user.email)
         return user
@@ -114,4 +120,6 @@ class UserService(
         currentUser = userRepository.save(currentUser)
         return currentUser
     }
+
+
 }

@@ -28,7 +28,7 @@ data class Role(
         var permissions: MutableList<Permission>,
 
         @ManyToMany
-        val users: List<User>
+        val users: MutableList<User>
 ) {
-    constructor(name: String, permissions: MutableList<Permission>): this(0, name, permissions, listOf())
+    constructor(name: String, permissions: MutableList<Permission>): this(0, name, permissions, mutableListOf<User>())
 }

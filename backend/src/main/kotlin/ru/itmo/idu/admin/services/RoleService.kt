@@ -91,4 +91,12 @@ class RoleService (
         log.info("Role {} updated", id)
         return role
     }
+
+    fun save(roles: List<Role>): MutableList<Role> {
+        return roleRepository.saveAll(roles)
+    }
+
+    fun save(role: Role): Role {
+        return roleRepository.save(role)
+    }
 }
