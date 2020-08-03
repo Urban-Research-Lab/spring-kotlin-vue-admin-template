@@ -13,7 +13,17 @@
                 <b-table id="roles-table" striped hover
                          :items="itemProvider"
                          ref="table"
+                         :fields="fields"
                 >
+
+                    <template v-slot:cell(actions)="row">
+                        <b-button size="sm" @click="editRoleClicked(row.item)" class="btn-primary mr-1">
+                            <i class="fa fa-edit"></i> Edit
+                        </b-button>
+                        <b-button size="sm" @click="deleteRoleClicked(row.item)" class="btn-danger">
+                            <i class="fa fa-trash"></i> Delete
+                        </b-button>
+                    </template>
                 </b-table>
             </b-col>
         </b-row>
@@ -27,6 +37,11 @@
     export default {
         name: "RoleList",
         mixins: [RoleAPI],
+        data() {
+            return {
+                fields: ["id", "name", "permissions", "actions"]
+            }
+        },
         methods: {
             async itemProvider() {
                 return this.getRoles()
@@ -34,6 +49,16 @@
             // called by parent component
             async updateData() {
                 this.$refs.table.refresh();
+            },
+            editRoleClicked(item) {
+                this.$router.push("/roles/" + item.id)
+            },
+
+            deleteRoleClicked(item) {
+                if (confirm("Do you really want to delete this item?")) {
+                    this.deleteRole(item.id);
+                    this.updateData();
+                }
             }
         }
     }

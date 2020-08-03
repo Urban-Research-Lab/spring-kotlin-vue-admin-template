@@ -26,7 +26,7 @@ class RolesController(
 
     @GetMapping("/{id}")
     fun getRole(@PathVariable("id") id: Long): ObjectResponse {
-        TODO()
+        return ObjectResponse(RoleDTO.fromRole(roleService.findById(id)))
     }
 
     @PostMapping("/{id}")

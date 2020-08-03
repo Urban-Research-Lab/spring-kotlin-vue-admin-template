@@ -13,6 +13,7 @@ import ServerLogs from "./pages/admin/ServerLogs";
 import CreateUser from "./pages/users/CreateUser";
 import RoleList from "./pages/roles/RoleList";
 import CreateRole from "./pages/roles/CreateRole";
+import EditRole from "./pages/roles/EditRole";
 
 Vue.use(VueRouter);
 
@@ -50,9 +51,23 @@ const router = new VueRouter({
             }
         },
         {
+            path: '/roles/:id',
+            component: AdminMain,
+            children: [
+                {
+                    component: EditRole, path: '', props: true
+                }],
+            meta: {
+                requiresPermissions: ['MANAGE_ROLES']
+            }
+        },
+        {
             path: '/roles',
             component: AdminMain,
-            children: [{component: RoleList, path: ''}],
+            children: [
+                {
+                    component: RoleList, path: ''
+                }],
             meta: {
                 requiresPermissions: ['MANAGE_ROLES']
             }
