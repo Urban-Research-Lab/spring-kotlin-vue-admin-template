@@ -4,6 +4,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
+import ru.itmo.idu.admin.api_classes.dto.CreateRoleRequest
 import ru.itmo.idu.admin.exceptions.EntityDoesNotExistException
 import ru.itmo.idu.admin.model.Permission
 import ru.itmo.idu.admin.model.Role
@@ -42,6 +43,13 @@ class RoleService (
         }
 
         roleRepository.save(defaultAdminRole)
+    }
+
+    fun createRole(request: CreateRoleRequest): Role {
+        var role = Role(0, request.name, request.permissions.map { Permission.valueOf(it) }.toMutableList())
+        role = roleRepository.save(role)
+        log.info("Role {} created", role.name)
+        return role
     }
 
     fun listRoles(): MutableList<Role> {

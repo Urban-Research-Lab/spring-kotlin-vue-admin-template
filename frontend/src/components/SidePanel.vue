@@ -38,6 +38,20 @@
             </div>
         </li>
 
+        <li class="nav-item" v-if="hasAuthority('MANAGE_ROLES')">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoles" aria-expanded="true"
+               aria-controls="collapseRoles">
+                <i class="fas fa-fw fa-user-tag"></i>
+                <span>Roles</span>
+            </a>
+            <div id="collapseRoles" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <b-link class="collapse-item" to="/roles">List Roles</b-link>
+                    <b-link class="collapse-item" to="/create_role">Create Role</b-link>
+                </div>
+            </div>
+        </li>
+
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">

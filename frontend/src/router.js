@@ -11,6 +11,8 @@ import ProfilePage from "./pages/users/ProfilePage";
 import NotFound from "./pages/errors/NotFound";
 import ServerLogs from "./pages/admin/ServerLogs";
 import CreateUser from "./pages/users/CreateUser";
+import RoleList from "./pages/roles/RoleList";
+import CreateRole from "./pages/roles/CreateRole";
 
 Vue.use(VueRouter);
 
@@ -45,6 +47,22 @@ const router = new VueRouter({
             children: [{component: CreateUser, path: ''}],
             meta: {
                 requiresPermissions: ['MANAGE_USERS']
+            }
+        },
+        {
+            path: '/roles',
+            component: AdminMain,
+            children: [{component: RoleList, path: ''}],
+            meta: {
+                requiresPermissions: ['MANAGE_ROLES']
+            }
+        },
+        {
+            path: '/create_role',
+            component: AdminMain,
+            children: [{component: CreateRole, path: ''}],
+            meta: {
+                requiresPermissions: ['MANAGE_ROLES']
             }
         },
         {
