@@ -7,7 +7,7 @@ data class UserDTO(
         val email: String,
         val name: String?,
         val authorities: List<String>,
-        val roles: List<String>,
+        val roles: List<RoleDTO>,
         val registrationTimestamp: Long
 ) {
     companion object {
@@ -17,7 +17,7 @@ data class UserDTO(
                     user.email,
                     user.displayName,
                     user.roles.flatMap { it.permissions }.map { it.name },
-                    user.roles.map { it.name },
+                    user.roles.map { RoleDTO.fromRoleSimplified(it) },
                     user.registrationTimestamp
             )
         }

@@ -14,21 +14,16 @@ const UserAPI = {
             return false
         },
 
-        updateUser(userId, updateRequest) {
-            Axios.post(process.env.VUE_APP_API_URL + `/api/v1/user/${userId}`,
-                updateRequest)
-                .then(response => {
-                    if (response.data.code === 0) {
-                        this.$store.dispatch('updateUser', response.data.data);
-                        this.successToast("User profile updated")
-                    } else {
-                        this.errorToast(`Failed to update user data: ` + response.data.message)
-                    }
-                }, error => {
-                    this.errorToast(`Failed to update user data: ` + error);
-                    console.log(error);
-                })
-
+        async updateUser(userId, updateRequest) {
+            let response = await Axios.post(process.env.VUE_APP_API_URL + `/api/v1/user/${userId}`, updateRequest);
+            if (response.data.code === 0) {
+                this.$store.dispatch('updateUser', response.data.data);
+                this.successToast("User profile updated")
+                return true;
+            } else {
+                this.errorToast(`Failed to update user data: ` + response.message);
+                return false;
+            }
         },
 
         async listUsers(pageNumber, pageSize) {
@@ -50,6 +45,16 @@ const UserAPI = {
 
             this.errorToast(`Failed to delete user: ` + response);
             return false
+        },
+
+        async getUser(id) {
+            let response = await Axios.get(process.env.VUE_APP_API_URL + `/api/v1/user/${id}`);
+            if (response.data.code === 0) {
+                return response.data.data;
+            }
+
+            this.errorToast(`Failed to fetch user: ` + response);
+            return {}
         },
 
         async countUsers() {

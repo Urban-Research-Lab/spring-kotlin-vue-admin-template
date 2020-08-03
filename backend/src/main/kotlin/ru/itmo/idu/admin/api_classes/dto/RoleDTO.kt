@@ -11,5 +11,9 @@ data class RoleDTO (
         fun fromRole(role: Role): RoleDTO {
             return RoleDTO(role.id, role.name, role.permissions.map { it.name })
         }
+
+        fun fromRoleSimplified(role: Role): RoleDTO {
+            return RoleDTO(role.id, role.name, emptyList())
+        }
     }
 }

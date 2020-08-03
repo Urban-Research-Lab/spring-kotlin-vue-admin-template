@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.PageRequest
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import ru.itmo.idu.admin.api_classes.LoginRequest
 import ru.itmo.idu.admin.api_classes.UserRegistrationRequest
 import ru.itmo.idu.admin.api_classes.UserUpdateRequest
@@ -39,7 +40,8 @@ class UserService(
 )
 {
 
-    private fun addDefaultSuperAdmin() {
+    @Transactional
+    fun addDefaultSuperAdmin() {
         var superAdmin = userRepository.findByEmail(defaultAdminLogin)
         if (superAdmin == null) {
             val role = roleService.findByName(defaultAdminRoleName)
