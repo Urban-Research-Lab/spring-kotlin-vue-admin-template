@@ -4,6 +4,8 @@ import com.nimbusds.oauth2.sdk.util.StringUtils
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.event.ContextRefreshedEvent
+import org.springframework.context.event.EventListener
 import org.springframework.data.domain.PageRequest
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -15,7 +17,7 @@ import ru.itmo.idu.admin.exceptions.EntityAlreadyExists
 import ru.itmo.idu.admin.exceptions.EntityDoesNotExistException
 import ru.itmo.idu.admin.model.User
 import ru.itmo.idu.admin.repositories.UserRepository
-import javax.annotation.PostConstruct
+
 
 private val log = LoggerFactory.getLogger(UserService::class.java)
 
@@ -39,8 +41,12 @@ class UserService(
         val defaultAdminRoleName: String
 )
 {
+    // we can not use @PostConstruct together with @Transactional, so we have to make initialization this way
+    @EventListener(ContextRefreshedEvent::class)
+    fun onApplicationEvent(event: ContextRefreshedEvent) {
+        event.applicationContext.getBean(UserService::class.java).setUp()
+    }
 
-    @Transactional
     fun addDefaultSuperAdmin() {
         var superAdmin = userRepository.findByEmail(defaultAdminLogin)
         if (superAdmin == null) {
@@ -51,13 +57,13 @@ class UserService(
                     passwordEncoder.encode(defaultAdminPass),
                     mutableListOf(role)
             )
-            userRepository.save(superAdmin)
             role.users.add(superAdmin)
+            userRepository.save(superAdmin)
             roleService.save(role)
         }
     }
 
-    @PostConstruct
+    @Transactional
     fun setUp() {
         addDefaultSuperAdmin()
     }
