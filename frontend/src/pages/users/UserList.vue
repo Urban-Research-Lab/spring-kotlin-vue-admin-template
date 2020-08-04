@@ -2,10 +2,10 @@
     <div>
         <b-row>
             <b-col>
-                <h1>Users</h1>
+                <h1>{{ $t("user.list")}}</h1>
             </b-col>
             <b-col class="flex-row-reverse">
-                <b-button variant="success" to="/create_user"><i class="fa fa-user-plus"></i> Create User</b-button>
+                <b-button variant="success" to="/create_user"><i class="fa fa-user-plus"></i>{{ $t("user.create")}}</b-button>
             </b-col>
         </b-row>
         <b-row>
@@ -25,10 +25,10 @@
 
                     <template v-slot:cell(actions)="row">
                         <b-button size="sm" @click="editUserClicked(row.item)" class="btn-primary mr-1">
-                            <i class="fa fa-edit"></i> Edit
+                            <i class="fa fa-edit"></i> {{ $t("edit")}}
                         </b-button>
                         <b-button size="sm" @click="deleteUserClicked(row.item)" class="btn-danger">
-                            <i class="fa fa-trash"></i> Delete
+                            <i class="fa fa-trash"></i> {{ $t("delete")}}
                         </b-button>
                     </template>
 

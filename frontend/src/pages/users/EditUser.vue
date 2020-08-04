@@ -11,7 +11,7 @@
                     <b-card-body>
                         <b-row class="mb-2">
                             <b-col>
-                                Email
+                                {{ $t("forms.email")}}
                             </b-col>
                             <b-col>
                                 <input type="text" readonly class="form-control-plaintext" v-bind:value="user.email">
@@ -19,7 +19,7 @@
                         </b-row>
                         <b-row class="mb-2">
                             <b-col>
-                                <label for="newNameInput">Display Name</label>
+                                <label for="newNameInput">{{ $t("forms.display_name")}}</label>
                             </b-col>
                             <b-col>
                                 <b-form-input
@@ -34,7 +34,7 @@
                         </b-row>
                         <b-row class="mb-2">
                             <b-col>
-                                <label for="passwordInput">Roles</label>
+                                <label for="passwordInput">{{ $t("forms.roles")}}</label>
                             </b-col>
                             <b-col>
                                 <b-form-select v-model="user.roleIds"
@@ -48,7 +48,7 @@
 
                     </b-card-body>
 
-                    <b-button type="submit" variant="primary">Update</b-button>
+                    <b-button type="submit" variant="primary">{{ $t("save_changes")}}</b-button>
                 </b-form>
             </b-card>
         </b-col>
@@ -59,7 +59,7 @@
                     <b-card-body>
                         <b-row class="mb-1">
                             <b-col>
-                                New Password
+                                {{ $t("forms.new_password")}}
                             </b-col>
                             <b-col>
                                 <b-form-input
@@ -69,12 +69,12 @@
                                         required
                                         placeholder="Enter new password"
                                 ></b-form-input>
-                                <span v-if="!$v.newPassword.minLength" class="text-danger">At least 4 characters.</span>
+                                <span v-if="!$v.newPassword.minLength" class="text-danger">{{ $t("forms.at_least_chars", {chars: 4})}}</span>
                             </b-col>
                         </b-row>
                         <b-row class="mb-1">
                             <b-col>
-                                Confirm Password
+                                {{ $t("forms.confirm_password")}}
                             </b-col>
                             <b-col>
                                 <b-form-input
@@ -85,11 +85,11 @@
                                         placeholder="Repeat new password"
                                 ></b-form-input>
                                 <span v-if="!$v.newPasswordConfirmation.sameAsPassword" class="text-danger">
-                                Passwords do not match.</span>
+                                {{ $t("forms.passwords_do_not_match")}}</span>
                             </b-col>
                         </b-row>
                     </b-card-body>
-                    <b-button type="submit" variant="primary">Change Password</b-button>
+                    <b-button type="submit" variant="primary">{{ $t("user.change_password")}}</b-button>
                 </b-card>
             </b-form>
         </b-col>

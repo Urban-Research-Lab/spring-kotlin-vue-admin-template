@@ -9,7 +9,7 @@
                     <b-card-body>
                         <b-row class="mb-2">
                             <b-col>
-                                <label for="emailInput">Email<sup>*</sup></label>
+                                <label for="emailInput">{{ $t("forms.email")}}<sup>*</sup></label>
                             </b-col>
                             <b-col>
                                 <b-form-input
@@ -24,7 +24,7 @@
                         </b-row>
                         <b-row class="mb-2">
                             <b-col>
-                                <label for="newNameInput">Display Name</label>
+                                <label for="newNameInput">{{ $t("forms.display_name")}}</label>
                             </b-col>
                             <b-col>
                                 <b-form-input
@@ -39,7 +39,7 @@
 
                         <b-row class="mb-2">
                             <b-col>
-                                <label for="passwordInput">Password<sup>*</sup></label>
+                                <label for="passwordInput">{{ $t("forms.password")}}<sup>*</sup></label>
                             </b-col>
                             <b-col>
                                 <b-form-input
@@ -55,7 +55,7 @@
 
                         <b-row class="mb-2">
                             <b-col>
-                                <label for="passwordInput">Roles</label>
+                                <label for="passwordInput">{{ $t("forms.roles")}}</label>
                             </b-col>
                             <b-col>
                                 <b-form-select v-model="roles"
@@ -69,7 +69,7 @@
 
                     </b-card-body>
 
-                    <b-button type="submit" variant="primary">Create User</b-button>
+                    <b-button type="submit" variant="primary">{{ $t("user.create")}}</b-button>
                 </b-form>
             </b-card>
         </b-col>

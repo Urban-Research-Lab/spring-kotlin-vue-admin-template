@@ -16,7 +16,7 @@
         <li class="nav-item">
             <a class="nav-link" href="index.html">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
+                <span>{{ $t("menu.dashboard")}}</span></a>
         </li>
 
         <!-- Divider -->
@@ -28,12 +28,12 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
                aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-users"></i>
-                <span>Users</span>
+                <span>{{ $t("menu.users")}}</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <b-link class="collapse-item" to="/users">List Users</b-link>
-                    <b-link class="collapse-item" to="/create_user">Create User</b-link>
+                    <b-link class="collapse-item" to="/users">{{ $t("menu.users.list")}}</b-link>
+                    <b-link class="collapse-item" to="/create_user">{{ $t("menu.users.create")}}</b-link>
                 </div>
             </div>
         </li>
@@ -42,12 +42,12 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoles" aria-expanded="true"
                aria-controls="collapseRoles">
                 <i class="fas fa-fw fa-user-tag"></i>
-                <span>Roles</span>
+                <span>{{ $t("menu.roles")}}</span>
             </a>
             <div id="collapseRoles" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <b-link class="collapse-item" to="/roles">List Roles</b-link>
-                    <b-link class="collapse-item" to="/create_role">Create Role</b-link>
+                    <b-link class="collapse-item" to="/roles">{{ $t("menu.roles.list")}}</b-link>
+                    <b-link class="collapse-item" to="/create_role">{{ $t("menu.roles.create")}}</b-link>
                 </div>
             </div>
         </li>
@@ -60,11 +60,11 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#serverAdminCollapse"
                aria-expanded="true" aria-controls="serverAdminCollapse">
                 <i class="fas fa-fw fa-cogs"></i>
-                <span>Server Admin</span>
+                <span>{{ $t("menu.admin")}}</span>
             </a>
             <div id="serverAdminCollapse" class="collapse" aria-labelledby="serverAdminCollapseHeading" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <b-link class="collapse-item" to="/server_logs">View Logs</b-link>
+                    <b-link class="collapse-item" to="/server_logs">{{ $t("menu.admin.logs")}}</b-link>
                 </div>
             </div>
         </li>

@@ -5,13 +5,13 @@
                     class="mb-2"
             >
                 <b-card-title>
-                    Edit Role {{id}}
+                    {{$t("role.edit")}} {{id}}
                 </b-card-title>
                 <b-form @submit="onRoleUpdate">
                     <b-card-body>
                         <b-row class="mb-2">
                             <b-col>
-                                <label for="nameInput">Role Name</label>
+                                <label for="nameInput">{{$t("forms.name")}}</label>
                             </b-col>
                             <b-col>
                                 <input type="text" id="nameInput" readonly class="form-control-plaintext" v-bind:value="role.name">
@@ -21,7 +21,7 @@
 
                         <b-row class="mb-2">
                             <b-col>
-                                <label for="permissionsInput">Permissions</label>
+                                <label for="permissionsInput">{{$t("forms.permissions")}}</label>
                             </b-col>
                             <b-col>
                                 <b-form-select v-model="role.permissions"
@@ -36,7 +36,7 @@
 
                     </b-card-body>
 
-                    <b-button type="submit" variant="primary">Save Role</b-button>
+                    <b-button type="submit" variant="primary">{{$t("save_changes")}}</b-button>
                 </b-form>
             </b-card>
         </b-col>

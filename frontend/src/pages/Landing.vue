@@ -2,34 +2,34 @@
     <div class="container">
         <b-row class="mb-5">
             <b-col>
-                <h1 class="text-center">This is landing page</h1>
+                <h1 class="text-center">{{ $t("landing.title")}}</h1>
             </b-col>
         </b-row>
         <b-row class="mb-5">
             <b-col>
-                <h3>Available to everyone</h3>
-                <p>Does not need logging in</p>
+                <h3>{{ $t("landing.feature1.title")}}</h3>
+                <p>{{ $t("landing.feature1.text")}}</p>
             </b-col>
             <b-col>
                 <h3>
-                    Easy to lay out
+                    {{ $t("landing.feature2.title")}}
                 </h3>
                 <p>
-                    With bootstrap-vue support
+                    {{ $t("landing.feature2.text")}}
                 </p>
             </b-col>
             <b-col>
                 <h3>
-                    More features coming soon
+                    {{ $t("landing.feature3.title")}}
                 </h3>
                 <p>
-                    Lorem ipsum
+                    {{ $t("landing.feature3.text")}}
                 </p>
             </b-col>
         </b-row>
         <b-row class="mb-5">
             <b-col>
-               <b-button variant="success" href="/" style="width:100%">Start</b-button>
+               <b-button variant="success" href="/" style="width:100%">{{ $t("start")}}</b-button>
             </b-col>
         </b-row>
     </div>

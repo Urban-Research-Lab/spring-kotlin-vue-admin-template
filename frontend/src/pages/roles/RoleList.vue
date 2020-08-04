@@ -2,7 +2,7 @@
     <div>
         <b-row>
             <b-col>
-                <h1>Roles</h1>
+                <h1>{{$t("role.list")}}</h1>
             </b-col>
             <b-col class="flex-row-reverse">
                 <b-button variant="success" to="/create_role"><i class="fa fa-user-plus"></i> Create Role</b-button>
@@ -18,10 +18,10 @@
 
                     <template v-slot:cell(actions)="row">
                         <b-button size="sm" @click="editRoleClicked(row.item)" class="btn-primary mr-1">
-                            <i class="fa fa-edit"></i> Edit
+                            <i class="fa fa-edit"></i> {{$t("edit")}}
                         </b-button>
                         <b-button size="sm" @click="deleteRoleClicked(row.item)" class="btn-danger">
-                            <i class="fa fa-trash"></i> Delete
+                            <i class="fa fa-trash"></i> {{$t("delete")}}
                         </b-button>
                     </template>
                 </b-table>

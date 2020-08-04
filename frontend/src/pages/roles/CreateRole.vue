@@ -9,7 +9,7 @@
                     <b-card-body>
                         <b-row class="mb-2">
                             <b-col>
-                                <label for="nameInput">Role Name</label>
+                                <label for="nameInput">{{$t("forms.name")}}</label>
                             </b-col>
                             <b-col>
                                 <b-form-input
@@ -25,7 +25,7 @@
 
                         <b-row class="mb-2">
                             <b-col>
-                                <label for="permissionsInput">Roles</label>
+                                <label for="permissionsInput">{{$t("forms.permissions")}}</label>
                             </b-col>
                             <b-col>
                                 <b-form-select v-model="permissions"
@@ -40,7 +40,7 @@
 
                     </b-card-body>
 
-                    <b-button type="submit" variant="primary">Create Role</b-button>
+                    <b-button type="submit" variant="primary">{{$t("role.create")}}</b-button>
                 </b-form>
             </b-card>
         </b-col>

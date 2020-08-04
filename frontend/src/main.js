@@ -8,6 +8,7 @@ import LoadScript from 'vue-plugin-load-script';
 import store from './storage.js';
 import router from './router.js'
 import {Vuelidate} from "vuelidate";
+import {i18n} from './i18n'
 
 Vue.config.productionTip = false;
 
@@ -34,5 +35,6 @@ import("../public/sbadmin/vendor/fontawesome-free/css/all.min.css");
 new Vue({
   router: router,
   store: store,
-  render: h => h(App)
+  render: h => h(App),
+  i18n: i18n
 }).$mount('#app');
