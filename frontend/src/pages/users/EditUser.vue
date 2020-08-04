@@ -145,7 +145,7 @@
                     permissions: this.user.roles
                 };
 
-                let result = await this.updateUser(this.id, request);
+                let result = await this.updateUser(this.id, request, false);
                 if (result) {
                     this.$router.push('/users')
                 }

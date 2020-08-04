@@ -1,0 +1,24 @@
+#
+# This file contains specific configurations for tests
+#
+file_storage:
+  root: ./files
+
+server:
+  address: 0.0.0.0
+  port: 8080
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 3000MB
+      max-request-size: 30000MB
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+

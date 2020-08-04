@@ -110,7 +110,7 @@
         methods: {
             onProfileUpdate(evt) {
                 evt.preventDefault();
-                this.updateUser(this.$store.getters.getUserId, {'newName': this.$data.newName});
+                this.updateUser(this.$store.getters.getUserId, {'newName': this.$data.newName}, true);
             },
 
             onPasswordUpdate(evt) {
@@ -119,7 +119,7 @@
                 if (this.$v.passwordConfirmation.$invalid || this.$v.newPassword.$invalid) {
                     return;
                 }
-                this.updateUser(this.$store.getters.getUserId, {'newPassword': this.$data.newPassword});
+                this.updateUser(this.$store.getters.getUserId, {'newPassword': this.$data.newPassword}, true);
             }
         },
         validations: {

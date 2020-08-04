@@ -70,6 +70,8 @@ dependencies {
     compileOnly("org.projectlombok:lombok")
 
     runtimeOnly("mysql:mysql-connector-java:8.0.13")
+    testImplementation("junit:junit:4.12")
+    testImplementation("com.h2database:h2:1.4.197")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }

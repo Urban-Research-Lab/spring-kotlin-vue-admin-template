@@ -19,6 +19,9 @@
                     <template v-slot:cell(registrationTimestamp)="data">
                         {{ new Date(data.value).toLocaleDateString() }}
                     </template>
+                    <template v-slot:cell(roles)="data">
+                        {{ data.value.map(role => role.name) }}
+                    </template>
 
                     <template v-slot:cell(actions)="row">
                         <b-button size="sm" @click="editUserClicked(row.item)" class="btn-primary mr-1">

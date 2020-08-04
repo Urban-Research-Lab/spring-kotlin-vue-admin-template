@@ -128,7 +128,7 @@ class UserService(
         if (request.newRoles != null) {
             // todo: prevent from assigning some roles?
             val roles = request.newRoles.map { roleService.findById(it) }.toMutableSet()
-            val rolesToRemove = currentUser.roles.filter { roles.contains(it) }
+            val rolesToRemove = currentUser.roles.filter { !roles.contains(it) }
             currentUser.roles.removeAll(rolesToRemove)
             rolesToRemove.forEach { it.users.remove(currentUser) }
             roleService.save(rolesToRemove)

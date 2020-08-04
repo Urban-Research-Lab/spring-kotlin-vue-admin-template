@@ -14,11 +14,13 @@ const UserAPI = {
             return false
         },
 
-        async updateUser(userId, updateRequest) {
+        async updateUser(userId, updateRequest, updateCurrentUser = false) {
             let response = await Axios.post(process.env.VUE_APP_API_URL + `/api/v1/user/${userId}`, updateRequest);
             if (response.data.code === 0) {
-                this.$store.dispatch('updateUser', response.data.data);
-                this.successToast("User profile updated")
+                if (updateCurrentUser) {
+                    this.$store.dispatch('updateUser', response.data.data);
+                }
+                this.successToast("User profile updated");
                 return true;
             } else {
                 this.errorToast(`Failed to update user data: ` + response.message);
