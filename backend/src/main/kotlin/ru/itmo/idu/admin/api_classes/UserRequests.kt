@@ -23,4 +23,9 @@ data class UserUpdateRequest(
         val newName: String?,
         val newPassword: String?,
         val newRoles: List<Long>?
-)
+) {
+        override fun toString(): String {
+                val passwordString = if (newPassword == null) "null" else "*****"
+                return "UserUpdateRequest(newName=$newName, newPassword=${passwordString}, newRoles=$newRoles)"
+        }
+}

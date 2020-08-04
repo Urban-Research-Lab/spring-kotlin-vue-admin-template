@@ -152,7 +152,12 @@
             },
 
             async onPasswordUpdate(evt) {
-                evt.preventDefault()
+                evt.preventDefault();
+                this.$v.$touch();
+                if (this.$v.newPasswordConfirmation.$invalid || this.$v.newPassword.$invalid) {
+                    return;
+                }
+                this.updateUser(this.id, {'newPassword': this.$data.newPassword}, true);
             }
         }
     }
