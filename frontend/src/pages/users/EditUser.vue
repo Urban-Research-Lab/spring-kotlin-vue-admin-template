@@ -142,7 +142,7 @@
                 evt.preventDefault();
                 let request = {
                     newName: this.user.name,
-                    permissions: this.user.roles
+                    newRoles: this.user.roleIds
                 };
 
                 let result = await this.updateUser(this.id, request, false);
