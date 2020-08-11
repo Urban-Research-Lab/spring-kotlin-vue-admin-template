@@ -33,7 +33,7 @@ const getters = {
         return state.user.authorities;
     },
     hasAuthority: state => authority => {
-        return state.user.authorities.includes(authority);
+        return state.user.authorities && state.user.authorities.includes(authority);
     },
     getToken: state => {
         return state.token;

@@ -117,7 +117,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if(to.matched.some(record => record.meta.requiresPermissions !== undefined)) {
-        if (store.state.token === undefined) {
+        if (store.state.token === undefined || store.state.token === "") {
             next({
                 path: '/signin',
                 params: { nextUrl: to.fullPath }
