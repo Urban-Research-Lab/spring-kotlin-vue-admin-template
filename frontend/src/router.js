@@ -16,6 +16,7 @@ import CreateRole from "./pages/roles/CreateRole";
 import EditRole from "./pages/roles/EditRole";
 import EditUser from "./pages/users/EditUser";
 import Register from "@/pages/Register";
+import OAuthSignIn from "@/pages/OAuthSignIn";
 
 Vue.use(VueRouter);
 
@@ -99,6 +100,9 @@ const router = new VueRouter({
         },
         {
             path: '/signin', component: SignIn
+        },
+        {
+            path: `/oauthLogin`, component: OAuthSignIn
         },
         {
             path: "/register", component: Register

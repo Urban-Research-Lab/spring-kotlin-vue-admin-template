@@ -21,14 +21,10 @@ public class JwtProvider {
     @Value("\${assm.app.jwtSecret}")
     lateinit var jwtSecret: String
 
-    @Value("\${assm.app.jwtExpiration}")
-    var jwtExpiration:Int?=0
-
     fun generateJwtToken(username: String): String {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(Date())
-                .setExpiration(Date((Date()).getTime() + jwtExpiration!! * 1000))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact()
     }

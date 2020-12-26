@@ -102,20 +102,20 @@ class UserController(
         return BaseResponse(ResponseCodes.OK)
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/me")
+    fun getCurrentUser(): ObjectResponse<UserDTO> {
+        log.info("getCurrentUser()")
+        val user = securityService.getCurrentUser() ?: return ObjectResponse(ResponseCodes.INVALID_CREDENTIALS)
+        return ObjectResponse(UserDTO.fromUser(user))
+    }
+
     @GetMapping("/{id}")
     fun getUser(
        @PathVariable("id") id: Long
     ): ObjectResponse<UserDTO> {
         log.info("getUser(id = {})", id)
         val user = userService.getUser(id)
-        return ObjectResponse(UserDTO.fromUser(user))
-    }
-
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/me")
-    fun getCurrentUser(): ObjectResponse<UserDTO> {
-        log.info("getCurrentUser()")
-        val user = securityService.getCurrentUser() ?: return ObjectResponse(ResponseCodes.INVALID_CREDENTIALS)
         return ObjectResponse(UserDTO.fromUser(user))
     }
 

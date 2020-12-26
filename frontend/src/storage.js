@@ -14,11 +14,15 @@ function loadUser() {
 const state = {
     token: localStorage.getItem('user-token') || '',
     user: loadUser(),
+    locale: localStorage.getItem('locale') || 'en',
 };
 
 const getters = {
     isAuthenticated: state => {
         return state.token != null && state.token !== '';
+    },
+    isActivated: state => {
+        return state.user.status === "ACTIVE";
     },
     getUsername: state => {
         return state.user.name !== undefined ? state.user.name : state.user.email;
@@ -37,6 +41,9 @@ const getters = {
     },
     getToken: state => {
         return state.token;
+    },
+    getLocale: state => {
+        return state.locale;
     }
 };
 
@@ -56,7 +63,16 @@ const mutations = {
     update_user: (state, user) => {
         localStorage.setItem('user', JSON.stringify(user));
         state.user = user;
-    }
+    },
+    update_token: (state, token) => {
+        localStorage.setItem('user-token', token);
+        state.token = token;
+    },
+    update_locale: (state, locale) => {
+        localStorage.setItem('locale', locale);
+        state.locale = locale;
+    },
+
 };
 
 const actions = {
@@ -70,7 +86,6 @@ const actions = {
         context.commit('update_user', user)
     }
 };
-
 
 const store = new Vuex.Store({
     state,
