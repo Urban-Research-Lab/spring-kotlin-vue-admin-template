@@ -103,6 +103,8 @@ class UserService(
         return roleService.findByName(defaultUserRoleName)
     }
 
+    @Transactional
+    @Throws(InsufficientPrivilegesException::class, EntityAlreadyExists::class)
     fun registerUser(userRegistrationRequest: UserRegistrationRequest): User {
         val currentUser = securityService.getCurrentUser()
         if (!registrationEnabled && (currentUser == null || !hasAuthority(currentUser, Permission.MANAGE_USERS))) {
@@ -238,11 +240,12 @@ class UserService(
 
         var userToChange = getUser(id)
         val currentUser = securityService.getCurrentUser()
-        if (userToChange.id != userToChange.id && !securityService.hasAuthority(userToChange, Permission.MANAGE_USERS)) {
+        if (currentUser == null || (currentUser.id != userToChange.id && !securityService.hasAuthority(currentUser, Permission.MANAGE_USERS))) {
             log.error("You need MANAGE_USERS permission to change users other than yourself")
             throw InsufficientPrivilegesException("You can not edit this user")
         }
-        if ((request.newRoles != null && request.newRoles.isNotEmpty() && request.newRoles != userToChange.roles) && !securityService.hasAuthority(userToChange, Permission.MANAGE_USERS)) {
+        if ((request.newRoles != null && request.newRoles.isNotEmpty() && request.newRoles != userToChange.roles)
+                && !securityService.hasAuthority(currentUser, Permission.MANAGE_USERS)) {
             log.error("You need MANAGE_USERS permission to change list of roles for a user")
             throw InsufficientPrivilegesException("You are not allowed to change list of roles")
         }
