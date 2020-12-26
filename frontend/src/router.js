@@ -61,6 +61,9 @@ const router = new VueRouter({
             }
         },
         {
+            path: '/activateUser', component: SignIn
+        },
+        {
             path: '/roles/:id',
             component: AdminMain,
             children: [
