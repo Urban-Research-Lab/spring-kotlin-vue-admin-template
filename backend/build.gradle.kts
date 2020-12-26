@@ -57,6 +57,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.2.3")
     implementation("com.google.guava:guava:28.2-jre")
     implementation("commons-io:commons-io:2.6")
+    implementation("org.apache.commons:commons-lang3:3.11")
     implementation("org.apache.commons:commons-collections4:4.2")
     implementation("mysql:mysql-connector-java:8.0.19")
 

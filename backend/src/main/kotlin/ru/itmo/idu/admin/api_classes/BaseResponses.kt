@@ -53,10 +53,10 @@ class ObjectListResponse(val objects: List<Any>?, code: Int, message: String)
     constructor(objects: List<Any>): this(objects, ResponseCodes.OK.code, ResponseCodes.OK.message)
 }
 
-class ObjectResponse(val data: Any?, code: Int, message: String)
+class ObjectResponse<E>(val data: E?, code: Int, message: String)
     : BaseResponse(code, message) {
 
     constructor(rc: ResponseCodes) : this(null, rc.code, rc.message)
 
-    constructor(data: Any?): this(data, ResponseCodes.OK.code, ResponseCodes.OK.message)
+    constructor(data: E?): this(data, ResponseCodes.OK.code, ResponseCodes.OK.message)
 }

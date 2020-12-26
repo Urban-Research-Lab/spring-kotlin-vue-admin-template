@@ -25,7 +25,7 @@ class RolesController(
 ) {
 
     @GetMapping("/{id}")
-    fun getRole(@PathVariable("id") id: Long): ObjectResponse {
+    fun getRole(@PathVariable("id") id: Long): ObjectResponse<RoleDTO> {
         return ObjectResponse(RoleDTO.fromRole(roleService.findById(id)))
     }
 
@@ -34,7 +34,7 @@ class RolesController(
             @PathVariable("id") id: Long,
             @RequestBody request: UpdateRoleRequest
 
-    ): ObjectResponse {
+    ): ObjectResponse<RoleDTO> {
         log.info("updateRole(id = {}, request = {})")
         val result = roleService.updateRole(id, request)
         return ObjectResponse(RoleDTO.fromRole(result))
@@ -60,7 +60,7 @@ class RolesController(
     }
 
     @PostMapping("/create")
-    fun createRole(@RequestBody request: CreateRoleRequest): ObjectResponse {
+    fun createRole(@RequestBody request: CreateRoleRequest): ObjectResponse<RoleDTO> {
         log.info("createRole(request = {})", request)
         val role = roleService.createRole(request)
         return ObjectResponse(RoleDTO.fromRole(role))

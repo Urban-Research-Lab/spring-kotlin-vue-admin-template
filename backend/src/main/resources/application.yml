@@ -1,7 +1,10 @@
 server:
   address: 0.0.0.0
   port: 8060
-
+  # remember to set up nginx or other reverse proxy for sending these headers
+  # without them OAuth2 process will fail with 'invalid_redirect_uri' errors
+  remote_ip_header: X-Forwarded-For
+  protocol_header: X-Forwarded-Proto
 
 spring:
   servlet:
@@ -17,6 +20,14 @@ spring:
     database-platform: org.hibernate.dialect.MySQL55Dialect
     hibernate:
       ddl-auto: update
+  mail:
+    host: changeit
+    port: 2525
+    username: changeit
+    password: changeit
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
 
 assm:
   app:
@@ -32,3 +43,14 @@ users:
 
 log:
   entries: 100
+
+mail:
+  enabled: true
+  locale: ru
+
+# This url will be used in emails sent to client to redirect them to the frontend
+frontend:
+  location: http://localhost:8080/#
+
+passwordRestoreToken:
+  expireMillis: 1000000
