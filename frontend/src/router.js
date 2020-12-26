@@ -15,6 +15,7 @@ import RoleList from "./pages/roles/RoleList";
 import CreateRole from "./pages/roles/CreateRole";
 import EditRole from "./pages/roles/EditRole";
 import EditUser from "./pages/users/EditUser";
+import Register from "@/pages/Register";
 
 Vue.use(VueRouter);
 
@@ -98,6 +99,9 @@ const router = new VueRouter({
         },
         {
             path: '/signin', component: SignIn
+        },
+        {
+            path: "/register", component: Register
         },
         {
             path: '/landing', component: Landing

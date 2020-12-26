@@ -67,7 +67,8 @@ class UserService(
         @Value("\${users.defaultUserRoleName}")
         val defaultUserRoleName: String,
 
-        @Value("\${features.oauthEnabled}") val oauthEnabled: Boolean
+        @Value("\${features.oauthEnabled}") val oauthEnabled: Boolean,
+        @Value("\${features.registrationEnabled}") val registrationEnabled: Boolean
 
 )
 {
@@ -103,6 +104,11 @@ class UserService(
     }
 
     fun registerUser(userRegistrationRequest: UserRegistrationRequest): User {
+        val currentUser = securityService.getCurrentUser()
+        if (!registrationEnabled && (currentUser == null || !hasAuthority(currentUser, Permission.MANAGE_USERS))) {
+            log.error("Registration is disabled, only admin user can create new users")
+            throw InsufficientPrivilegesException("Only admin users can create new accounts")
+        }
         log.info("Creating new user {} {}", userRegistrationRequest.email, userRegistrationRequest.name)
         val existingUser = userRepository.findByEmail(userRegistrationRequest.email)
         if (existingUser != null) {

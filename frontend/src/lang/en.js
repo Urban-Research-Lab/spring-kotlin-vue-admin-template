@@ -1,4 +1,10 @@
 export default {
+    "login.with_google": "Login with Google",
+    "login.with_facebook": "Login with Facebook",
+    "login.dontHave": "Don't have account?",
+    "register.alreadyHave": "Already have account?",
+    "register": "Register",
+
     "landing.title": "This is landing page",
     "landing.feature1.title": "Available to everyone",
     "landing.feature1.text": "Does not need logging in",

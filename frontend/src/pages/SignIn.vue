@@ -24,12 +24,21 @@
                     <b-form-input type="password" placeholder="Password" v-model="password" />
                     <div class="mt-2"></div>
                 </div>
+                <div class="mb-2 text-center" v-if="registrationEnabled">{{$t('login.dontHave')}} <b-link href="#/register">{{$t('register')}}</b-link></div>
 
-                <b-button v-on:click="login" variant="primary">Login</b-button>
+                <b-button v-on:click="login" variant="primary" class="w-100">Login</b-button>
 
-                <hr class="my-4" />
+                <hr>
 
-                <b-button variant="link">Forget password?</b-button>
+                <div v-if="oauthEnabled">
+                    <a :href="googleLoginUrl" class="btn btn-google btn-user btn-block">
+                        <i class="fab fa-google fa-fw"></i> {{$t('login.with_google')}}
+                    </a>
+                    <a :href="facebookLoginUrl" class="btn btn-facebook btn-user btn-block">
+                        <i class="fab fa-facebook fa-fw"></i> {{$t('login.with_facebook')}}
+                    </a>
+                </div>
+
             </b-card>
         </div>
     </div>
@@ -53,6 +62,23 @@
             if (this.$route.query.logout != null) {
                 this.$data.alertMessage = "You have been logged out";
                 this.showAlert();
+            }
+        },
+        computed: {
+            googleLoginUrl() {
+                return process.env.VUE_APP_API_URL + `/oauth2/authorization/google`
+            },
+
+            facebookLoginUrl() {
+                return process.env.VUE_APP_API_URL + `/oauth2/authorization/facebook`
+            },
+
+            oauthEnabled() {
+                return process.env.VUE_APP_OAUTH_ENABLED
+            },
+
+            registrationEnabled() {
+                return process.env.VUE_APP_REGISTRATION_ENABLED
             }
         },
         methods: {
