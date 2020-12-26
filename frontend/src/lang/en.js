@@ -13,6 +13,13 @@ export default {
     "landing.feature3.title": "More features coming soon",
     "landing.feature3.text": "Lorem ipsum",
 
+    "emailSent": "Email was sent",
+    "passwordWasReset": "Password was reset",
+    "newUserRegistered": "New user was registered",
+    "youHaveBeenBanned": "You have been banned: {reason}",
+    "youHaveBeenLoggedOut": "You have been logged out",
+    "userActivated": "User activated",
+
     "start": "Start",
     "logout": "Log Out",
     "save_changes": "Save Changes",

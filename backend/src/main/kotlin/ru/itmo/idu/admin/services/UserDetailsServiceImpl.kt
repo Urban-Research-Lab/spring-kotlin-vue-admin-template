@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
+import ru.itmo.idu.admin.model.UserStatus
 import ru.itmo.idu.admin.repositories.UserRepository
 
 @Service
@@ -19,14 +20,15 @@ class UserDetailsServiceImpl: UserDetailsService {
     override fun loadUserByUsername(username: String): UserDetails {
         val user = userRepository.findByEmail(username) ?: throw UsernameNotFoundException("User '$username' not found")
 
-        val authorities: List<GrantedAuthority> = user.roles.map{ SimpleGrantedAuthority(it.name) }
+        val permissions = user.roles.flatMap { it.permissions }
+        val authorities: List<GrantedAuthority> = permissions.distinct().map { SimpleGrantedAuthority(it.name) }
 
         return org.springframework.security.core.userdetails.User
                 .withUsername(username)
                 .password(user.password)
                 .authorities(authorities)
                 .accountExpired(false)
-                .accountLocked(false)
+                .accountLocked(user.status == UserStatus.BANNED) //todo: handle LockedException
                 .credentialsExpired(false)
                 .disabled(false)
                 .build()
