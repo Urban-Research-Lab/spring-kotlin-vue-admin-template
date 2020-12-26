@@ -65,7 +65,9 @@ class UserService(
         @Value("\${passwordRestoreToken.expireMillis}")
         val passwordRestoreTokenExpireMillis: Long,
         @Value("\${users.defaultUserRoleName}")
-        val defaultUserRoleName: String
+        val defaultUserRoleName: String,
+
+        @Value("\${features.oauthEnabled}") val oauthEnabled: Boolean
 
 )
 {
@@ -276,6 +278,10 @@ class UserService(
 
     @Transactional
     fun createUserForOAuthLogin(provider: String, userProperties: Map<String, Any>): UserDetails {
+        if (!oauthEnabled) {
+            log.error("OAuth logins disabled in config, can not create new user from OAuth provider")
+            throw IllegalStateException("OAuth logins are disabled in config")
+        }
         val email = userProperties["email"].toString()
         val name = userProperties["name"].toString()
         val existingUser = userRepository.findByEmail(email)

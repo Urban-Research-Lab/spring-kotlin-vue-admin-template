@@ -14,6 +14,38 @@ const UserAPI = {
             return false
         },
 
+        async registerUserWithResponse(registerRequest) {
+            let response = await Axios.post(process.env.VUE_APP_API_URL + `/api/v1/user/new`, registerRequest);
+            if (response.data.code === 0) {
+                this.successToast("User created");
+                return response.data;
+            }
+            return response.data;
+        },
+
+        async activateUser(token) {
+            let response = Axios.post(process.env.VUE_APP_API_URL + `/api/v1/user/activate?token=` + token);
+            return response;
+        },
+
+        async activateUserAdmin(email) {
+            let response = await Axios.post(process.env.VUE_APP_API_URL + `/api/v1/user/admin/activate?email=` + email);
+            if (response.data.code === 0) {
+                return true;
+            }
+            return false;
+        },
+
+        async createPasswordRestoreToken(email) {
+            let response = await Axios.post(process.env.VUE_APP_API_URL + `/api/v1/user/createPasswordRestoreToken?email=` + email);
+            return response.data;
+        },
+
+        async restorePassword(token, newPassword) {
+            let response = await Axios.post(process.env.VUE_APP_API_URL + `/api/v1/user/restorePassword?token=` + token + `&newPassword=` + newPassword);
+            return response.data;
+        },
+
         async updateUser(userId, updateRequest, updateCurrentUser = false) {
             let response = await Axios.post(process.env.VUE_APP_API_URL + `/api/v1/user/${userId}`, updateRequest);
             if (response.data.code === 0) {
@@ -67,7 +99,29 @@ const UserAPI = {
 
             this.errorToast(`Failed to fetch user count: ` + response);
             return 0
-        }
+        },
+
+        async banUser(id, reason) {
+            let response = await Axios.post(process.env.VUE_APP_API_URL + `/api/v1/user/${id}/ban?reason=${reason}`);
+            if (response.data.code === 0) {
+                this.successToast("User banned");
+                return true;
+            }
+
+            this.errorToast(`Failed to ban user: ` + response);
+            return false
+        },
+
+        async unbanUser(id) {
+            let response = await Axios.post(process.env.VUE_APP_API_URL + `/api/v1/user/${id}/unban`);
+            if (response.data.code === 0) {
+                this.successToast("User unbanned");
+                return true;
+            }
+
+            this.errorToast(`Failed to unban user: ` + response);
+            return false
+        },
     },
     mixins: [
         toastMixin

@@ -6,19 +6,19 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath(kotlin("gradle-plugin", version= "1.3.61"))
-        classpath(kotlin("noarg", version= "1.3.61"))
+        classpath(kotlin("gradle-plugin", version= "1.4.21"))
+        classpath(kotlin("noarg", version= "1.4.21"))
     }
 }
 
 
 plugins {
-    id("org.springframework.boot") version "2.2.4.RELEASE"
-    id("io.spring.dependency-management") version "1.0.9.RELEASE"
-    kotlin("jvm") version "1.3.61"
-    kotlin("plugin.spring") version "1.3.61"
-    kotlin("plugin.noarg") version "1.3.61"
-    kotlin("plugin.jpa") version "1.3.61"
+    id("org.springframework.boot") version "2.4.0"
+    id("io.spring.dependency-management") version "1.0.10.RELEASE"
+    kotlin("jvm") version "1.4.21"
+    kotlin("plugin.spring") version "1.4.21"
+    kotlin("plugin.noarg") version "1.4.21"
+    kotlin("plugin.jpa") version "1.4.21"
 }
 
 
@@ -39,6 +39,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-rest")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    implementation("org.springframework.security:spring-security-oauth2-client")
+    implementation("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.2.6.RELEASE")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("org.springframework.boot:spring-boot-starter-web")

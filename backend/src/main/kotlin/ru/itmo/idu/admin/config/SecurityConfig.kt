@@ -1,26 +1,34 @@
 package ru.itmo.idu.admin.config
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import ru.itmo.idu.admin.services.OAuthSuccessHandler
 import ru.itmo.idu.admin.services.UserDetailsServiceImpl
 import ru.itmo.idu.admin.services.jwt.JwtAuthEntryPoint
 import ru.itmo.idu.admin.services.jwt.JwtAuthTokenFilter
 
 @EnableWebSecurity
 @Configuration
-class SecurityConfig : WebSecurityConfigurerAdapter(){
+@EnableOAuth2Client
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+class SecurityConfig(
+        @Value("\${features.oauthEnabled}") val oauthEnabled: Boolean
+) : WebSecurityConfigurerAdapter(){
 
     @Autowired
     internal var userDetailsService: UserDetailsServiceImpl? = null
@@ -28,6 +36,8 @@ class SecurityConfig : WebSecurityConfigurerAdapter(){
     @Autowired
     private val unauthorizedHandler: JwtAuthEntryPoint? = null
 
+    @Autowired
+    private val oauthSuccessHandler: OAuthSuccessHandler? = null
 
     @Bean
     fun bCryptPasswordEncoder(): BCryptPasswordEncoder {
@@ -76,6 +86,10 @@ class SecurityConfig : WebSecurityConfigurerAdapter(){
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter::class.java)
+        if (oauthEnabled) {
+            http.authorizeRequests().and().oauth2Login()
+                    .successHandler(oauthSuccessHandler)
+        }
     }
 
 }

@@ -5,7 +5,15 @@ enum class ResponseCodes(val code: Int, val message: String) {
     INTERNAL_ERROR(1, "Internal Error"),
 
     INSUFFICIENT_PRIVILEGES(101, "User does not have access to this operation"),
-    INVALID_CREDENTIALS(102, "User not found or password is incorrect")
+    INVALID_CREDENTIALS(102, "User login, password or oauth token is incorrect"),
+    ACCOUNT_BANNED(103, "This user account is banned"),
+    INVALID_INPUT_OUTPUT(104, "Failed to create or download a file"),
+    ENTITY_ALREADY_EXISTS(105, "Object already exists"),
+    ENTITY_DOESNT_EXIST(106, "Object does not exist"),
+    ILLEGAL_ENTITY_STATE(107, "Object in this state can not be moderated"),
+    ILLEGAL_ARGUMENT(108, "Object can not be operated (invalid format or invalid arguments or file already exists)"),
+    INSUFFICIENT_PRIVILEGES_OR_NO_USER(109, "User is not logged in or user can not do this operation"),
+    TOKEN_EXPIRED(111, "Token expired")
 }
 
 open class BaseResponse(val code: Int, val message: String) {

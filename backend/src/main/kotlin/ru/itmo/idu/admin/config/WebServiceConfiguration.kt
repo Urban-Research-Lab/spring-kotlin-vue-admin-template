@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.support.ResourceBundleMessageSource
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.scheduling.annotation.EnableAsync
 import org.springframework.scheduling.annotation.EnableScheduling
@@ -36,5 +37,14 @@ class WebServiceConfiguration {
     @Bean
     fun restTemplate(): RestTemplate {
         return RestTemplate()
+    }
+
+    @Bean
+    fun messageSource(): ResourceBundleMessageSource {
+        val source = ResourceBundleMessageSource()
+        source.setBasenames("messages")
+        source.setUseCodeAsDefaultMessage(true)
+        source.setDefaultEncoding("UTF-8")
+        return source
     }
 }
