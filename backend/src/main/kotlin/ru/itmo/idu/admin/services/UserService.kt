@@ -281,7 +281,9 @@ class UserService(
     fun saveUser(user: User): User = userRepository.save(user)
 
     fun getAuthorities(user: User): List<GrantedAuthority> {
-        val permissions = user.roles.flatMap { it.permissions }
+        val permissions = user.roles.flatMap(fun(it: Role): Iterable<Permission> {
+            return it.permissions
+        })
         return permissions.distinct().map { SimpleGrantedAuthority(it.name) }
     }
 

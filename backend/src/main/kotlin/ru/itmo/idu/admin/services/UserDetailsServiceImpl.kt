@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import ru.itmo.idu.admin.model.Permission
+import ru.itmo.idu.admin.model.Role
 import ru.itmo.idu.admin.model.UserStatus
 import ru.itmo.idu.admin.repositories.UserRepository
 
@@ -22,7 +24,9 @@ class UserDetailsServiceImpl: UserDetailsService {
     override fun loadUserByUsername(username: String): UserDetails {
         val user = userRepository.findByEmail(username) ?: throw UsernameNotFoundException("User '$username' not found")
 
-        val permissions = user.roles.flatMap { it.permissions }
+        val permissions = user.roles.flatMap(fun(it: Role): Iterable<Permission> {
+            return it.permissions
+        })
         val authorities: List<GrantedAuthority> = permissions.distinct().map { SimpleGrantedAuthority(it.name) }
 
         return org.springframework.security.core.userdetails.User

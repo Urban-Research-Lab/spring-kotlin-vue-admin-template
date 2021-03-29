@@ -1,7 +1,8 @@
 package ru.itmo.idu.admin.api_classes.dto
 
+import ru.itmo.idu.admin.model.Permission
+import ru.itmo.idu.admin.model.Role
 import ru.itmo.idu.admin.model.User
-import ru.itmo.idu.admin.model.UserStatus
 
 data class UserDTO(
         val id: Long,
@@ -18,7 +19,9 @@ data class UserDTO(
                     user.id,
                     user.email,
                     user.displayName,
-                    user.roles.flatMap { it.permissions }.map { it.name },
+                    user.roles.flatMap(fun(it: Role): Iterable<Permission> {
+                        return it.permissions
+                    }).map { it.name },
                     user.roles.map { RoleDTO.fromRoleSimplified(it) },
                     user.registrationTimestamp,
                     user.status.name
