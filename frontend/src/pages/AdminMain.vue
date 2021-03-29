@@ -35,7 +35,7 @@
             next(vm => {
                 // hack: use this hardcoded method to force refresh chld component data when its shown again
                 // since vue-router does not recreate components but reuses old ones
-                if (vm.$refs.child.updateData !== undefined) {
+                if (vm.$refs.child && vm.$refs.child.updateData !== undefined) {
                     vm.$refs.child.updateData()
                 }
             })
