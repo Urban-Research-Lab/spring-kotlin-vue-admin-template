@@ -6,19 +6,19 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath(kotlin("gradle-plugin", version= "1.4.21"))
-        classpath(kotlin("noarg", version= "1.4.21"))
+        classpath(kotlin("gradle-plugin", version= "1.4.32"))
+        classpath(kotlin("noarg", version= "1.4.32"))
     }
 }
 
 
 plugins {
-    id("org.springframework.boot") version "2.4.0"
-    id("io.spring.dependency-management") version "1.0.10.RELEASE"
-    kotlin("jvm") version "1.4.21"
-    kotlin("plugin.spring") version "1.4.21"
-    kotlin("plugin.noarg") version "1.4.21"
-    kotlin("plugin.jpa") version "1.4.21"
+    id("org.springframework.boot") version "2.4.4"
+    id("io.spring.dependency-management") version "1.0.11.RELEASE"
+    kotlin("jvm") version "1.4.32"
+    kotlin("plugin.spring") version "1.4.32"
+    kotlin("plugin.noarg") version "1.4.32"
+    kotlin("plugin.jpa") version "1.4.32"
 }
 
 
@@ -55,24 +55,22 @@ dependencies {
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-    implementation("org.slf4j:slf4j-api:1.7.25")
+    implementation("org.slf4j:slf4j-api:1.7.30")
     implementation("ch.qos.logback:logback-classic:1.2.3")
     implementation("com.google.guava:guava:28.2-jre")
     implementation("commons-io:commons-io:2.6")
     implementation("org.apache.commons:commons-lang3:3.11")
     implementation("org.apache.commons:commons-collections4:4.2")
-    implementation("mysql:mysql-connector-java:8.0.19")
+    implementation("mysql:mysql-connector-java:8.0.23")
 
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.2")
 
     implementation("org.hibernate:hibernate-spatial")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.springframework.session:spring-session-core")
-    compileOnly("org.projectlombok:lombok")
 
-    runtimeOnly("mysql:mysql-connector-java:8.0.13")
     testImplementation("junit:junit:4.13")
     testImplementation("com.h2database:h2:1.4.197")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -86,6 +84,6 @@ tasks.withType < Test > {
 tasks.withType < KotlinCompile > {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 }
