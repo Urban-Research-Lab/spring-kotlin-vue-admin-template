@@ -1,45 +1,47 @@
 <template>
-  <div div="signin">
-    <div class="login-form">
-      <b-card
-          title="Login"
-          tag="article"
-          style="max-width: 20rem;"
-          class="mb-2"
-      >
-        <div>
-          <b-alert
-              :show="dismissCountDown"
-              dismissible
-              variant="danger"
-              @dismissed="dismissCountDown=0"
-              @dismiss-count-down="countDownChanged"
-          > {{ alertMessage }}
-          </b-alert>
-        </div>
-        <div>
-          <b-form-input type="email" placeholder="Email" v-model="email" />
-          <div class="mt-2"></div>
+  <div class="d-flex flex-column">
+    <div class="container">
 
-          <b-form-input type="password" placeholder="Password" v-model="password" />
-          <div class="mt-2"></div>
-        </div>
-        <div class="mb-2 text-center" v-if="registrationEnabled">{{$t('login.dontHave')}} <b-link href="#/register">{{$t('register')}}</b-link></div>
+      <div class="login-form">
+        <b-card
+            title="Login"
+            tag="article"
+            style="max-width: 20rem;"
+            class="mb-2"
+        >
+          <div>
+            <b-alert
+                :show="dismissCountDown"
+                dismissible
+                variant="danger"
+                @dismissed="dismissCountDown=0"
+                @dismiss-count-down="countDownChanged"
+            > {{ alertMessage }}
+            </b-alert>
+          </div>
+          <div>
+            <b-form-input type="email" placeholder="Email" v-model="email" />
+            <div class="mt-2"></div>
 
-        <b-button v-on:click="login" variant="primary" class="w-100">Login</b-button>
+            <b-form-input type="password" placeholder="Password" v-model="password" />
+            <div class="mt-2"></div>
+          </div>
+          <div class="mb-2 text-center" v-if="registrationEnabled">{{$t('login.dontHave')}} <b-link href="#/register">{{$t('register')}}</b-link></div>
 
-        <hr>
+          <b-button v-on:click="login" variant="primary" class="w-100">Login</b-button>
 
-        <div v-if="oauthEnabled">
-          <a :href="googleLoginUrl" class="btn btn-google btn-user btn-block">
-            <i class="fab fa-google fa-fw"></i> {{$t('login.with_google')}}
-          </a>
-          <a :href="facebookLoginUrl" class="btn btn-facebook btn-user btn-block">
-            <i class="fab fa-facebook fa-fw"></i> {{$t('login.with_facebook')}}
-          </a>
-        </div>
+          <div v-if="oauthEnabled">
+            <hr>
+            <a :href="googleLoginUrl" class="btn btn-google btn-user btn-block">
+              <i class="fab fa-google fa-fw"></i> {{$t('login.with_google')}}
+            </a>
+            <a :href="facebookLoginUrl" class="btn btn-facebook btn-user btn-block">
+              <i class="fab fa-facebook fa-fw"></i> {{$t('login.with_facebook')}}
+            </a>
+          </div>
 
-      </b-card>
+        </b-card>
+      </div>
     </div>
   </div>
 </template>
@@ -90,7 +92,7 @@ export default {
     },
 
     oauthEnabled() {
-      return process.env.VUE_APP_OAUTH_ENABLED
+      return process.env.VUE_APP_OAUTH_ENABLED === "true"
     },
 
     registrationEnabled() {
