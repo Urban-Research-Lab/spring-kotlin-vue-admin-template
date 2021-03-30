@@ -94,7 +94,7 @@ export default {
     },
 
     registrationEnabled() {
-      return process.env.VUE_APP_REGISTRATION_ENABLED
+      return process.env.VUE_APP_REGISTRATION_ENABLED === "true"
     }
   },
   methods: {

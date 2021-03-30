@@ -3,6 +3,7 @@ export default {
     "login.with_facebook": "Login with Facebook",
     "login.dontHave": "Don't have account?",
     "register.alreadyHave": "Already have account?",
+    "register.disabled": "Registration is disabled, please contact site administrators to create an account",
     "register": "Register",
 
     "landing.title": "This is landing page",
