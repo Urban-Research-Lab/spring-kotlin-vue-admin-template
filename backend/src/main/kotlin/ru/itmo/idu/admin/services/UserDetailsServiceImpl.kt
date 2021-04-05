@@ -1,6 +1,7 @@
 package ru.itmo.idu.admin.services
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -13,6 +14,7 @@ import ru.itmo.idu.admin.model.Role
 import ru.itmo.idu.admin.model.UserStatus
 import ru.itmo.idu.admin.repositories.UserRepository
 
+@Qualifier("userDetailServiceImpl")
 @Service
 class UserDetailsServiceImpl: UserDetailsService {
 
