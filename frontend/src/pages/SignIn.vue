@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column">
     <div class="container">
-
+      <b-form @submit="login">
       <div class="login-form">
         <b-card
             title="Login"
@@ -28,7 +28,7 @@
           </div>
           <div class="mb-2 text-center" v-if="registrationEnabled">{{$t('login.dontHave')}} <b-link href="#/register">{{$t('register')}}</b-link></div>
 
-          <b-button v-on:click="login" variant="primary" class="w-100">Login</b-button>
+          <b-button type="submit" variant="primary" class="w-100">Login</b-button>
 
           <div v-if="oauthEnabled">
             <hr>
@@ -42,6 +42,7 @@
 
         </b-card>
       </div>
+      </b-form>
     </div>
   </div>
 </template>
