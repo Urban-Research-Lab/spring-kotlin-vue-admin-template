@@ -27,6 +27,7 @@ private val log = LoggerFactory.getLogger(OAuthSuccessHandler::class.java)
 class OAuthSuccessHandler(
         @Autowired
         val authorizedClientService: OAuth2AuthorizedClientService,
+        @org.springframework.context.annotation.Lazy
         @Autowired
         val userService: UserService,
         @Autowired

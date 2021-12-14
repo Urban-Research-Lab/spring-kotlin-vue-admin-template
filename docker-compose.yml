@@ -1,0 +1,53 @@
+version: '3'
+services:
+  db:
+    image: mariadb
+    container_name: admin-db
+    environment:
+      MARIADB_DATABASE: admin_template_db
+      MARIADB_USER: admin
+      MARIADB_PASSWORD: 12345
+      MARIADB_ROOT_PASSWORD: 12345
+    networks:
+      - backdb
+    expose:
+      - 3306
+    volumes:
+      - "db-volume:/var/lib/mysql"
+    restart: unless-stopped
+
+  api:
+    image: urbanitmo/kotlin-vue-admin-backend:latest
+    container_name: admin-backend
+    restart: unless-stopped
+    build:
+      context: backend/.
+      dockerfile: Dockerfile
+    ports:
+      - '8060:8060'
+    depends_on:
+      - db
+    networks:
+      - fb
+      - backdb
+  vue:
+    image: urbanitmo/kotlin-vue-admin-frontend:latest
+    container_name: admin-frontend
+    restart: unless-stopped
+    build:
+      context: frontend/.
+      dockerfile: Dockerfile
+    ports:
+      - '8080:80'
+    depends_on:
+      - api
+    networks:
+      - fb
+networks:
+  backdb:
+    driver: bridge
+  fb:
+    driver: bridge
+
+volumes:
+  db-volume:

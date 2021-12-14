@@ -50,7 +50,8 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
     implementation("jakarta.validation:jakarta.validation-api:3.0.0")
-
+    implementation("javax.validation:validation-api:2.0.1.Final")
+    implementation("org.hibernate.validator:hibernate-validator:7.0.1.Final")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
@@ -74,6 +75,8 @@ dependencies {
     testImplementation("com.h2database:h2:2.0.202")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("org.mockito:mockito-core:4.1.0")
+
 }
 
 tasks.withType < Test > {

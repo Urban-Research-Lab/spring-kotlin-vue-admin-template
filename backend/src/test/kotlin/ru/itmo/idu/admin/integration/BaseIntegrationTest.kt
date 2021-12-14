@@ -2,8 +2,9 @@ package ru.itmo.idu.admin.integration
 
 import org.junit.Assert
 import org.junit.runner.RunWith
-import org.mockito.Matchers
+import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.AutoConfigurationPackage
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
@@ -108,7 +109,9 @@ internal class TestConfig {
     fun mockRestTemplate(): RestTemplate {
         val mock = Mockito.mock(RestTemplate::class.java)
         // set up initial mock to prevent exceptions in log, as this method is called each time we save a route
-        Mockito.`when`(mock.getForObject(Matchers.anyString(), Matchers.eq(String::class.java), Matchers.anyString())).thenReturn("{ \"results\": []}")
+        `when`(mock.getForObject(ArgumentMatchers.anyString(),
+            ArgumentMatchers.eq(String::class.java),
+            ArgumentMatchers.anyString())).thenReturn("{ \"results\": []}")
         return mock
     }
 }
