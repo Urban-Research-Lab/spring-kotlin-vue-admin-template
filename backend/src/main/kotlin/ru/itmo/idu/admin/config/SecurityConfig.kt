@@ -5,16 +5,13 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client
+import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
@@ -25,11 +22,10 @@ import ru.itmo.idu.admin.services.jwt.JwtAuthTokenFilter
 
 @EnableWebSecurity
 @Configuration
-@EnableOAuth2Client
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfig(
-        @Value("\${features.oauthEnabled}") val oauthEnabled: Boolean
-) : WebSecurityConfigurerAdapter(){
+    @Value("\${features.oauthEnabled}") val oauthEnabled: Boolean
+) {
 
     @Qualifier("userDetailServiceImpl")
     @Autowired
@@ -51,19 +47,6 @@ class SecurityConfig(
         return JwtAuthTokenFilter()
     }
 
-    @Throws(Exception::class)
-    override fun configure(authenticationManagerBuilder: AuthenticationManagerBuilder) {
-        authenticationManagerBuilder
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(bCryptPasswordEncoder())
-    }
-
-    @Bean
-    @Throws(Exception::class)
-    override fun authenticationManagerBean(): AuthenticationManager {
-        return super.authenticationManagerBean()
-    }
-
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration()
@@ -77,21 +60,21 @@ class SecurityConfig(
         return source
     }
 
-    @Throws(Exception::class)
-    override fun configure(http: HttpSecurity) {
+    @Bean
+    fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.cors().and()
-                .csrf().disable().authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .csrf().disable().authorizeHttpRequests {
+                it.requestMatchers("/**").permitAll()
+                    .anyRequest().authenticated()
+                if (oauthEnabled) {
+                    it.and().oauth2Login().successHandler(oauthSuccessHandler)
+                }
+            }
+            .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter::class.java)
-        if (oauthEnabled) {
-            http.authorizeRequests().and().oauth2Login()
-                    .successHandler(oauthSuccessHandler)
-        }
+        return http.build()
     }
 
 }

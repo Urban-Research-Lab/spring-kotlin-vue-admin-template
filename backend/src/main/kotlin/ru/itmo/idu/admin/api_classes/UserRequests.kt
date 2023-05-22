@@ -1,7 +1,7 @@
 package ru.itmo.idu.admin.api_classes
 
-import javax.validation.constraints.Email
-import javax.validation.constraints.NotEmpty
+import jakarta.validation.constraints.Email
+import jakarta.validation.constraints.NotEmpty
 
 data class LoginRequest (
         val email: String,

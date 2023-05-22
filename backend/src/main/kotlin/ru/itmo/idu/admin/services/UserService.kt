@@ -158,6 +158,7 @@ class UserService(
         return user
     }
 
+    @Transactional
     fun activateUser(token: String): String {
         val t = userActivationTokenRepository.findByIdOrNull(token) ?: throw EntityDoesNotExistException("Token not found")
         val user = userRepository.findByEmail(t.email) ?: throw EntityDoesNotExistException("User ${t.email} not found")
@@ -173,6 +174,7 @@ class UserService(
         return email
     }
 
+    @Transactional
     fun activateUserAdmin(email: String) {
         val user = userRepository.findByEmail(email) ?: throw EntityDoesNotExistException("User $email not found")
         if (user.status != UserStatus.REGISTERED) {
@@ -195,6 +197,7 @@ class UserService(
         return token
     }
 
+    @Transactional
     fun restorePassword(token: String, newPassword: String) {
         val pt = passwordRestoreTokenRepository.findByIdOrNull(token) ?: throw EntityDoesNotExistException("Token not found")
         if (pt.createdAt.time + passwordRestoreTokenExpireMillis < System.currentTimeMillis()) {
@@ -206,6 +209,7 @@ class UserService(
         passwordRestoreTokenRepository.delete(pt)
     }
 
+    @Transactional
     fun changePassword(email: String, newPassword: String) {
         val user = userRepository.findByEmail(email) ?: throw EntityDoesNotExistException("User $email not found")
         user.password = passwordEncoder.encode(newPassword)
@@ -236,6 +240,7 @@ class UserService(
         return userRepository.count()
     }
 
+    @Transactional
     fun updateUser(id: Long, request: UserUpdateRequest): User {
 
         var userToChange = getUser(id)

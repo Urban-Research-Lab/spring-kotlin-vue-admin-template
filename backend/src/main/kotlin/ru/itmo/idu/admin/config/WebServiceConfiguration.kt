@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.support.ResourceBundleMessageSource
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
@@ -20,7 +21,8 @@ import org.springframework.web.client.RestTemplate
 @EnableJpaRepositories(basePackages = ["ru.itmo.idu.admin.repositories"])
 @EnableTransactionManagement
 @EnableConfigurationProperties
-@EntityScan("ru.itmo.idu.admin.model")
+@ComponentScan("ru.itmo.idu.admin")
+@EntityScan("ru.itmo.idu.admin.model.**")
 @SpringBootApplication(scanBasePackages = ["ru.itmo.idu.admin"])
 @EnableScheduling
 @EnableAsync

@@ -1,8 +1,8 @@
 package ru.itmo.idu.admin.integration
 
+import jakarta.transaction.Transactional
 import org.junit.Assert
 import org.junit.Test
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.test.context.support.WithMockUser
 import ru.itmo.idu.admin.api_classes.LoginRequest
@@ -20,6 +20,7 @@ import ru.itmo.idu.admin.repositories.UserActivationTokenRepository
 import ru.itmo.idu.admin.services.RoleService
 import java.util.*
 
+@Transactional
 class UserServiceIT : BaseIntegrationTest() {
 
     @Autowired
@@ -134,7 +135,7 @@ class UserServiceIT : BaseIntegrationTest() {
     @Test
     fun activateUser() {
         Assert.assertEquals(0, userActivationTokenRepository.count())
-        val user = userService.registerUser(UserRegistrationRequest(
+        var user = userService.registerUser(UserRegistrationRequest(
                 "user",
                 "user@example.com",
                 "12345",
@@ -150,6 +151,7 @@ class UserServiceIT : BaseIntegrationTest() {
 
         val token = userActivationTokenRepository.findAll()[0].token
         userService.activateUser(token)
+        user = userService.getUser(user.id)
         Assert.assertEquals(UserStatus.ACTIVE, user.status)
         Assert.assertEquals(0, userActivationTokenRepository.count())
     }

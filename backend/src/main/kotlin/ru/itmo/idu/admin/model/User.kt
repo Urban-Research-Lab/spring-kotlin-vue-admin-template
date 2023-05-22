@@ -1,7 +1,7 @@
 package ru.itmo.idu.admin.model
 
-import javax.persistence.*
-import javax.validation.constraints.NotEmpty
+import jakarta.persistence.*
+import jakarta.validation.constraints.NotEmpty
 
 enum class UserStatus {
     REGISTERED,
@@ -65,6 +65,10 @@ data class User(
             password: String,
             roles: MutableList<Role>
     ): this(0L, email, "", password, roles, System.currentTimeMillis(), null, null, UserStatus.REGISTERED)
+
+    constructor() : this("", "", mutableListOf()) {
+
+    }
 
     override fun toString(): String {
         return "User(id=$id, email='$email', roles=$roles, registrationTimestamp=$registrationTimestamp)"

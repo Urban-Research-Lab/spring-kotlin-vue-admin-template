@@ -1,7 +1,7 @@
 package ru.itmo.idu.admin.model
 
 
-import javax.persistence.*
+import jakarta.persistence.*
 
 /**
  * All permissions used on the platform shall be in this enum

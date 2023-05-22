@@ -1,8 +1,5 @@
 package ru.itmo.idu.admin.web
 
-import ru.itmo.idu.admin.api_classes.BaseResponse
-import ru.itmo.idu.admin.integration.TestConfig
-
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,8 +11,10 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.RequestBuilder
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import ru.itmo.idu.admin.api_classes.BaseResponse
 import ru.itmo.idu.admin.config.SecurityConfig
 import ru.itmo.idu.admin.config.WebServiceConfiguration
+import ru.itmo.idu.admin.integration.TestConfig
 
 @RunWith(SpringRunner::class)
 @SpringBootTest(classes = [WebServiceConfiguration::class, SecurityConfig::class, TestConfig::class])

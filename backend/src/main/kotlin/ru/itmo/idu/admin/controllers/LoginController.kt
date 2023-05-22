@@ -1,9 +1,8 @@
 package ru.itmo.idu.admin.controllers
 
+import jakarta.validation.Valid
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -14,19 +13,12 @@ import ru.itmo.idu.admin.model.User
 import ru.itmo.idu.admin.model.UserStatus
 import ru.itmo.idu.admin.services.UserService
 import ru.itmo.idu.admin.services.jwt.JwtProvider
-import javax.validation.Valid
 
 private val log = LoggerFactory.getLogger(LoginController::class.java)
 
 @RestController
 @RequestMapping("/api/v1/auth")
 class LoginController(
-        @Autowired
-        val authenticationManager: AuthenticationManager,
-
-        @Autowired
-        val encoder: PasswordEncoder,
-
         @Autowired
         val jwtProvider: JwtProvider,
 

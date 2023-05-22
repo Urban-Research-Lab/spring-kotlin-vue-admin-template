@@ -1,6 +1,8 @@
 package ru.itmo.idu.admin.services
 
 
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import org.apache.commons.lang3.StringUtils
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,8 +20,6 @@ import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.exchange
 import ru.itmo.idu.admin.services.jwt.JwtProvider
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 private val log = LoggerFactory.getLogger(OAuthSuccessHandler::class.java)
 

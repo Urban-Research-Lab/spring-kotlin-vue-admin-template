@@ -1,33 +1,22 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-buildscript {
-    repositories {
-        jcenter()
-        mavenCentral()
-    }
-    dependencies {
-        classpath(kotlin("gradle-plugin", version= "1.6.10"))
-        classpath(kotlin("noarg", version= "1.6.10"))
-    }
-}
-
-
 plugins {
-    id("org.springframework.boot") version "2.6.1"
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("jvm") version "1.6.10"
-    kotlin("plugin.spring") version "1.6.10"
-    kotlin("plugin.noarg") version "1.6.10"
-    kotlin("plugin.jpa") version "1.6.10"
+    id("org.springframework.boot") version "3.0.7"
+    id("io.spring.dependency-management") version "1.1.0"
+    id("org.asciidoctor.jvm.convert") version "3.3.2"
+    kotlin("jvm") version "1.7.22"
+    kotlin("plugin.spring") version "1.7.22"
+    kotlin("plugin.jpa") version "1.7.22"
 }
 
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 springBoot {
     mainClass.set("ru.itmo.idu.admin.Prod")
 }
 
 group = "ru.itmo.idu.admin-template"
-version = "1.0.0"
+version = "1.1.0"
 
 repositories {
     mavenLocal()
@@ -37,55 +26,52 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("org.springframework.security:spring-security-oauth2-client")
-    implementation("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.6.1")
-    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-    implementation("org.springframework.boot:spring-boot-starter-mail")
-    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("org.apache.commons:commons-collections4:4.4")
+    implementation("jakarta.servlet:jakarta.servlet-api:6.0.0")
 
-    implementation("io.jsonwebtoken:jjwt-api:0.11.2")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
-    implementation("jakarta.validation:jakarta.validation-api:3.0.0")
-    implementation("javax.validation:validation-api:2.0.1.Final")
-    implementation("org.hibernate.validator:hibernate-validator:7.0.1.Final")
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+    implementation("jakarta.validation:jakarta.validation-api:3.0.2")
+    implementation("org.hibernate.validator:hibernate-validator:8.0.0.Final")
 
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-
-    implementation("org.slf4j:slf4j-api:1.7.32")
-    implementation("ch.qos.logback:logback-classic:1.2.7")
-    implementation("com.google.guava:guava:31.0.1-jre")
-    implementation("commons-io:commons-io:2.6")
+    implementation("org.slf4j:slf4j-api:2.0.5")
+    implementation("ch.qos.logback:logback-classic:1.4.6")
+    implementation("com.google.guava:guava:31.1-jre")
+    implementation("commons-io:commons-io:2.11.0")
     implementation("org.apache.commons:commons-lang3:3.12.0")
-    implementation("org.apache.commons:commons-collections4:4.2")
-    implementation("mysql:mysql-connector-java:8.0.25")
+    implementation("org.apache.commons:commons-collections4:4.4")
+    implementation("org.mariadb.jdbc:mariadb-java-client:3.1.4")
+
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.2")
-
-    implementation("org.hibernate:hibernate-spatial")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.springframework.session:spring-session-core")
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation("com.h2database:h2:2.0.202")
+    testImplementation("com.h2database:h2:2.1.214")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
-    testImplementation("org.mockito:mockito-core:4.1.0")
+    testImplementation("org.mockito:mockito-core:5.2.0")
 
 }
 
 tasks.withType < Test > {
-    useJUnitPlatform()
+    useJUnit()
 }
 
 tasks.withType < KotlinCompile > {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 }

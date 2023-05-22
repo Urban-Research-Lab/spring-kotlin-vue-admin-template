@@ -6,8 +6,7 @@ import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
@@ -24,23 +23,18 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-import org.springframework.test.context.web.WebAppConfiguration
+import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.web.client.RestTemplate
 import ru.itmo.idu.admin.api_classes.UserRegistrationRequest
 import ru.itmo.idu.admin.config.SecurityConfig
 import ru.itmo.idu.admin.config.WebServiceConfiguration
+import ru.itmo.idu.admin.model.User
 import ru.itmo.idu.admin.model.UserStatus
 import ru.itmo.idu.admin.services.SecurityService
 import ru.itmo.idu.admin.services.UserService
-import ru.itmo.idu.admin.model.User
 
-@RunWith(SpringJUnit4ClassRunner::class)
-@WebAppConfiguration
-@DataJpaTest
-@AutoConfigurationPackage
-@ContextConfiguration(classes = [WebServiceConfiguration::class, SecurityConfig::class, TestConfig::class])
+@RunWith(SpringRunner::class)
+@SpringBootTest(classes = [WebServiceConfiguration::class, SecurityConfig::class, TestConfig::class])
 @ActiveProfiles("test")
 abstract class BaseIntegrationTest {
 

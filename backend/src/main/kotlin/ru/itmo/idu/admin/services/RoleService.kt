@@ -1,5 +1,6 @@
 package ru.itmo.idu.admin.services
 
+import jakarta.annotation.PostConstruct
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -12,7 +13,6 @@ import ru.itmo.idu.admin.model.Permission
 import ru.itmo.idu.admin.model.Role
 import ru.itmo.idu.admin.repositories.RoleRepository
 import ru.itmo.idu.admin.repositories.UserRepository
-import javax.annotation.PostConstruct
 
 private val log = LoggerFactory.getLogger(RoleService::class.java)
 

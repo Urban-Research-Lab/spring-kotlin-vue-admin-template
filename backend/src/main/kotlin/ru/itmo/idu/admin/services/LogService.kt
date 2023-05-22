@@ -6,12 +6,12 @@ import ch.qos.logback.classic.LoggerContext
 import ch.qos.logback.classic.filter.LevelFilter
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.AppenderBase
+import jakarta.annotation.PostConstruct
 import org.apache.commons.collections4.queue.CircularFifoQueue
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import ru.itmo.idu.admin.api_classes.dto.LogEntryDTO
-import javax.annotation.PostConstruct
 
 
 @Service
