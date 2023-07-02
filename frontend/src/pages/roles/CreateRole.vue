@@ -74,7 +74,7 @@
 
                 let result = await this.createRole(request);
                 if (result) {
-                    this.$router.push('/roles')
+                    await this.router.push('/roles')
                 }
             }
         }

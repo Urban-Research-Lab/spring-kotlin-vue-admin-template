@@ -1,4 +1,4 @@
-import VueRouter from 'vue-router'
+import {createRouter, createWebHashHistory} from 'vue-router'
 import Dashboard from "./pages/Dashboard";
 import SignIn from "./pages/SignIn";
 import Landing from "./pages/Landing";
@@ -18,9 +18,8 @@ import EditUser from "./pages/users/EditUser";
 import Register from "@/pages/Register";
 import OAuthSignIn from "@/pages/OAuthSignIn";
 
-Vue.use(VueRouter);
-
-const router = new VueRouter({
+const router = createRouter({
+    history:createWebHashHistory(),
     routes:  [
         {
             path: '/',
@@ -120,7 +119,7 @@ const router = new VueRouter({
             path: "/404", component: NotFound
         },
         {
-            path: '*',
+            path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound,
             redirect: '/404'
         }
     ]

@@ -1,40 +1,45 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
-import BootstrapVue from 'bootstrap-vue'
+import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import LoadScript from 'vue-plugin-load-script';
+import LoadScript, {loadScript} from 'vue-plugin-load-script';
+
 
 import store from './storage.js';
 import router from './router.js'
 import {Vuelidate} from "vuelidate";
 import {i18n} from './i18n'
 
-Vue.config.productionTip = false;
+const eventBus = createApp({
+        i18n: i18n,
+        render: h => h(App)
+});
 
-Vue.use(BootstrapVue);
-Vue.use(LoadScript);
-Vue.use(Vuelidate);
+
+eventBus.config.productionTip = false;
+
+eventBus.use(BootstrapVue);
+eventBus.use(LoadScript);
+eventBus.use(Vuelidate);
+eventBus.use(router)
+eventBus.use(store)
+
 
 // initialize template, some jquery hacks
 
-Vue.loadScript("/sbadmin/vendor/jquery/jquery.min.js");
-Vue.loadScript("/sbadmin/vendor/bootstrap/js/bootstrap.bundle.min.js");
+loadScript("/sbadmin/vendor/jquery/jquery.min.js").then(r => console.log("SUCESS"));
+loadScript("/sbadmin/vendor/bootstrap/js/bootstrap.bundle.min.js").then(r => console.log("SUCESS"));
 global.jQuery = require('jquery');
 global.$ = global.jQuery;
 window.$ = global.jQuery;
 window.jQuery = global.jQuery;
 
-Vue.loadScript("/sbadmin/js/sb-admin-2.min.js");
+loadScript("/sbadmin/js/sb-admin-2.min.js").then(r => console.log("SUCESS"));
 
 import("../public/sbadmin/css/sb-admin-2.css");
 import("../public/sbadmin/vendor/fontawesome-free/css/all.min.css");
 
 // tmplate init end
 
-new Vue({
-  router: router,
-  store: store,
-  render: h => h(App),
-  i18n: i18n
-}).$mount('#app');
+eventBus.mount('#app');
