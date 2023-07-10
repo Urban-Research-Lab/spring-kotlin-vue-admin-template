@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11:alpine
+FROM bellsoft/liberica-openjdk-alpine:17
 
 ENV JAVA_OPTS=""
 
