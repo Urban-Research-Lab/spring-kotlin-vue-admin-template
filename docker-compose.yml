@@ -17,7 +17,7 @@ services:
     restart: unless-stopped
 
   api:
-    image: urbanitmo/kotlin-vue-admin-backend:latest
+    image: ghcr.io/urban-research-lab/kotlin-vue-admin-backend:latest
     container_name: admin-backend
     restart: unless-stopped
     build:
@@ -31,7 +31,7 @@ services:
       - fb
       - backdb
   vue:
-    image: urbanitmo/kotlin-vue-admin-frontend:latest
+    image: ghcr.io/urban-research-lab/kotlin-vue-admin-frontend:latest
     container_name: admin-frontend
     restart: unless-stopped
     build:
