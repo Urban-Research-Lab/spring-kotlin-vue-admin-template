@@ -49,7 +49,7 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:3.12.0")
     implementation("org.apache.commons:commons-collections4:4.4")
     implementation("org.mariadb.jdbc:mariadb-java-client:3.1.4")
-
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.2")
 
