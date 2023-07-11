@@ -24,7 +24,12 @@ import ru.itmo.idu.admin.services.jwt.JwtAuthTokenFilter
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfig(
-    @Value("\${features.oauthEnabled}") val oauthEnabled: Boolean
+    @Value("\${features.oauthEnabled}") val oauthEnabled: Boolean,
+    @Value("\${spring.web.cors.mappings.baseOrigins.allowed-origins}") val allowedOrigins: MutableList<String>,
+    @Value("\${spring.web.cors.mappings.baseOrigins.allowed-headers}") val allowedHeaders: MutableList<String>,
+    @Value("\${spring.web.cors.mappings.baseOrigins.allowed-methods}") val allowedMethods: MutableList<String>,
+    @Value("\${spring.web.cors.mappings.baseOrigins.allow-credentials}") val allowedCredentials: Boolean,
+    @Value("\${spring.web.cors.mappings.baseOrigins.max-age}") val maxAge: Long
 ) {
 
     @Qualifier("userDetailServiceImpl")
@@ -50,11 +55,11 @@ class SecurityConfig(
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration()
-        configuration.allowedOrigins = listOf("http://localhost:8080") //todo: read from config
-        configuration.allowedHeaders = listOf("*")
-        configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
-        configuration.allowCredentials = true
-        configuration.maxAge = 3600
+        configuration.allowedOrigins = allowedOrigins //todo: read from config
+        configuration.allowedHeaders = allowedHeaders
+        configuration.allowedMethods = allowedMethods
+        configuration.allowCredentials = allowedCredentials
+        configuration.maxAge = maxAge
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", configuration)
         return source
