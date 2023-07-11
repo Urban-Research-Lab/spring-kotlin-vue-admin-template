@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.prepost.PreAuthorize
@@ -29,7 +30,8 @@ class UserController(
 
     @PostMapping("new")
     @Operation(summary = "Add a new user",
-        description = "Add a new user to include UserDTO parameters into a database")
+        description = "Add a new user to include UserDTO parameters into a database",
+        security = [SecurityRequirement(name = "AuthToken")])
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "User was created", content = [
             (Content(mediaType = "application/json", schema = Schema(implementation = UserDTO::class)))]),
@@ -49,7 +51,8 @@ class UserController(
 
     @PostMapping("activate")
     @Operation(summary = "Activate user",
-        description = "Activate user by the given token and searching matches in database")
+        description = "Activate user by the given token and searching matches in database",
+        security = [SecurityRequirement(name = "AuthToken")])
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "User was activated", content = [
             (Content(schema = Schema(hidden = true)))]),
@@ -71,7 +74,8 @@ class UserController(
     @PreAuthorize("hasAuthority('MANAGE_USERS')")
     @PostMapping("/admin/activate")
     @Operation(summary = "Activate admin",
-        description = "Activate admin by the given email with checking if the user has been activated and with searching matches in database")
+        description = "Activate admin by the given email with checking if the user has been activated and with searching matches in database",
+        security = [SecurityRequirement(name = "AuthToken")])
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "Admin was activated", content = [
             (Content(schema = Schema(hidden = true)))]),
@@ -91,7 +95,8 @@ class UserController(
     @PreAuthorize("hasAuthority('BAN_USERS')")
     @PostMapping("/{id}/ban")
     @Operation(summary = "Ban user",
-        description = "Ban user with a stated Id and reason. While doing so, there is a check if a current user has an authority to ban other members, user with this Id hadn't already been banned or current user is trying to ban itself")
+        description = "Ban user with a stated Id and reason. While doing so, there is a check if a current user has an authority to ban other members, user with this Id hadn't already been banned or current user is trying to ban itself",
+        security = [SecurityRequirement(name = "AuthToken")])
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "User has been banned", content = [
             (Content(schema = Schema(hidden = true)))]),
@@ -116,7 +121,8 @@ class UserController(
     @PreAuthorize("hasAuthority('BAN_USERS')")
     @PostMapping("/{id}/unban")
     @Operation(summary = "Cancel ban status of the user",
-        description = "Cancel ban status of the user with a stated Id and reason. While doing so, there is a check if a current user has an authority to unban other members, user with this Id hadn't already been unbanned or current user is trying to unban itself")
+        description = "Cancel ban status of the user with a stated Id and reason. While doing so, there is a check if a current user has an authority to unban other members, user with this Id hadn't already been unbanned or current user is trying to unban itself",
+        security = [SecurityRequirement(name = "AuthToken")])
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "Ban status of the current user has been lifted", content = [
             (Content(schema = Schema(hidden = true)))]),
@@ -140,7 +146,8 @@ class UserController(
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/{id}")
     @Operation(summary = "Update user",
-        description = "Update information of the user with a stated Id. While doing so, there is a check if a current user has an authority to update info of other members and all input values are correct")
+        description = "Update information of the user with a stated Id. While doing so, there is a check if a current user has an authority to update info of other members and all input values are correct",
+        security = [SecurityRequirement(name = "AuthToken")])
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "User info was updated", content = [
             (Content(mediaType = "application/json", schema = Schema(implementation = UserDTO::class)))]),
@@ -163,7 +170,8 @@ class UserController(
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('MANAGE_USERS')")
     @Operation(summary = "Delete user",
-        description = "Delete user with a stated Id")
+        description = "Delete user with a stated Id",
+        security = [SecurityRequirement(name = "AuthToken")])
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "User has been deleted", content = [
             (Content(schema = Schema(hidden = true)))]),
@@ -182,7 +190,8 @@ class UserController(
 
     @PostMapping("/createPasswordRestoreToken")
     @Operation(summary = "Create password for current user",
-        description = "Check if user account exists and generate new random password to send to stated email address")
+        description = "Check if user account exists and generate new random password to send to stated email address",
+        security = [SecurityRequirement(name = "AuthToken")])
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "Password was successfully generated ", content = [
             (Content(schema = Schema(hidden = true)))]),
@@ -201,7 +210,8 @@ class UserController(
 
     @PostMapping("/restorePassword")
     @Operation(summary = "Restore password for current user",
-        description = "Check if an old password exists and wasn't expired. If so replace an old password by a new one")
+        description = "Check if an old password exists and wasn't expired. If so replace an old password by a new one",
+        security = [SecurityRequirement(name = "AuthToken")])
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "Password was successfully restored ", content = [
             (Content(schema = Schema(hidden = true)))]),
@@ -221,7 +231,8 @@ class UserController(
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/me")
     @Operation(summary = "Get info about current user",
-        description = "Get info about current user")
+        description = "Get info about current user",
+        security = [SecurityRequirement(name = "AuthToken")])
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "Info about current user was successfully loaded", content = [
             (Content(mediaType = "application/json", schema = Schema(implementation = UserDTO::class)))]),
@@ -238,7 +249,8 @@ class UserController(
 
     @GetMapping("/{id}")
     @Operation(summary = "Get info about user with a stated Id",
-        description = "Get info about user with a stated Id if it exists")
+        description = "Get info about user with a stated Id if it exists",
+        security = [SecurityRequirement(name = "AuthToken")])
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "Info about user was successfully loaded", content = [
             (Content(mediaType = "application/json", schema = Schema(implementation = UserDTO::class)))]),
@@ -260,7 +272,8 @@ class UserController(
     @PreAuthorize("hasAuthority('MANAGE_USERS')")
     @GetMapping("/count")
     @Operation(summary = "Get info quantity of registered users",
-        description = "Get info quantity of registered users")
+        description = "Get info quantity of registered users",
+        security = [SecurityRequirement(name = "AuthToken")])
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "Info about quantity of users was successfully loaded", content = [
             (Content(schema = Schema(hidden = true)))]),
@@ -278,7 +291,8 @@ class UserController(
     @PreAuthorize("hasAuthority('MANAGE_USERS')")
     @GetMapping("/list")
     @Operation(summary = "Get list of registered users",
-        description = "Get list of registered users")
+        description = "Get list of registered users",
+        security = [SecurityRequirement(name = "AuthToken")])
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "Info about users was successfully loaded", content = [
             (Content(mediaType = "application/json", array = (
