@@ -35,6 +35,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("org.apache.commons:commons-collections4:4.4")
     implementation("jakarta.servlet:jakarta.servlet-api:6.0.0")
+    implementation("io.github.iruzhnikov:spring-webmvc-cors-properties-autoconfigure:1.1.0")
 
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
