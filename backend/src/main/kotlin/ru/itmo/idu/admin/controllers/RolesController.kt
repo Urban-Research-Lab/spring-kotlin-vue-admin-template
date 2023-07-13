@@ -33,7 +33,8 @@ class RolesController(
 
     @GetMapping("/{id}")
     @Operation(summary = "Get the role of a user",
-        description = "Get the role of a user with a stated Id")
+        description = "Get the role of a user with a stated Id",
+        security = [SecurityRequirement(name = "AuthToken")])
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "Info about role was successfully loaded", content = [
             (Content(mediaType = "application/json", schema = Schema(implementation = RoleDTO::class)))]),
@@ -91,7 +92,8 @@ class RolesController(
 
     @GetMapping("/list")
     @Operation(summary = "Get list of roles",
-        description = "Get list of all roles")
+        description = "Get list of all roles",
+        security = [SecurityRequirement(name = "AuthToken")])
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "Lists were successfully loaded", content = [
             (Content(mediaType = "application/json", array = (
@@ -109,7 +111,8 @@ class RolesController(
 
     @GetMapping("/permissions")
     @Operation(summary = "Get list of permissions",
-        description = "Get list of all permissions")
+        description = "Get list of all permissions",
+        security = [SecurityRequirement(name = "AuthToken")])
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "Lists were successfully loaded", content = [
             (Content(mediaType = "application/json", array = (

@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -22,7 +23,8 @@ class ServerLogController(
 
     @GetMapping(path = ["", "/"])
     @Operation(summary = "Get logs about events",
-        description = "Get logs about events")
+        description = "Get logs about events",
+        security = [SecurityRequirement(name = "AuthToken")])
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "Logs were successfully loaded", content = [
             (Content(mediaType = "application/json", schema = Schema(implementation = LogEntryDTO::class)))]),
