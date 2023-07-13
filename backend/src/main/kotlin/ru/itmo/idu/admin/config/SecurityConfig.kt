@@ -55,7 +55,7 @@ class SecurityConfig(
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration()
-        configuration.allowedOrigins = allowedOrigins //todo: read from config
+        configuration.allowedOrigins = allowedOrigins
         configuration.allowedHeaders = allowedHeaders
         configuration.allowedMethods = allowedMethods
         configuration.allowCredentials = allowedCredentials
