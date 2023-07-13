@@ -1,5 +1,8 @@
 package ru.itmo.idu.admin.controllers
 
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
 import jakarta.validation.Valid
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -47,6 +50,13 @@ class LoginController(
     }
 
     @PostMapping("/login")
+    @Operation(summary = "Authenticate user if it exists in a database",
+        description = "Authenticate user if given login and password are correct and exist in a database.")
+    @ApiResponses(value = [
+        ApiResponse(responseCode = "200", description = "User was found"),
+        ApiResponse(responseCode = "400", description = "Bad request"),
+        ApiResponse(responseCode = "404", description = "User wasn't found")]
+    )
     fun authenticateUser(@Valid @RequestBody loginRequest: LoginRequest): BaseResponse {
         log.info("Logging in user {}", loginRequest.email)
         val user = userService.checkLogin(loginRequest)

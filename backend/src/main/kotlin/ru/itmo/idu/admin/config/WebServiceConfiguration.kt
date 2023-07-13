@@ -3,6 +3,10 @@ package ru.itmo.idu.admin.config
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import io.swagger.v3.oas.models.Components
+import io.swagger.v3.oas.models.OpenAPI
+import io.swagger.v3.oas.models.info.Info
+import io.swagger.v3.oas.models.security.SecurityScheme
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -48,5 +52,17 @@ class WebServiceConfiguration {
         source.setUseCodeAsDefaultMessage(true)
         source.setDefaultEncoding("UTF-8")
         return source
+    }
+
+    @Bean
+    fun customOpenAPI(): OpenAPI? {
+        return OpenAPI()
+            .components(
+                Components().addSecuritySchemes(
+                    "AuthToken",
+                    SecurityScheme().type(SecurityScheme.Type.APIKEY).`in`(SecurityScheme.In.HEADER).name("Authorization")
+                )
+            )
+            .info(Info().title("Admin Template API").version("1.0.0"))
     }
 }
