@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClient
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler
+import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.exchange
@@ -24,6 +25,7 @@ import ru.itmo.idu.admin.services.jwt.JwtProvider
 private val log = LoggerFactory.getLogger(OAuthSuccessHandler::class.java)
 
 @Service
+@Component
 class OAuthSuccessHandler(
         @Autowired
         val authorizedClientService: OAuth2AuthorizedClientService,
