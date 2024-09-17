@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp } from 'vue';
 import App from './App.vue'
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css'
@@ -9,21 +9,19 @@ import LoadScript, {loadScript} from 'vue-plugin-load-script';
 import store from './storage.js';
 import router from './router.js'
 import {Vuelidate} from "vuelidate";
-import {i18n} from './i18n'
-
-const eventBus = createApp({
-        i18n: i18n,
-        render: h => h(App)
-});
+import { i18n } from './i18n';
 
 
-eventBus.config.productionTip = false;
+const app = createApp(App);
 
-eventBus.use(BootstrapVue);
-eventBus.use(LoadScript);
-eventBus.use(Vuelidate);
-eventBus.use(router)
-eventBus.use(store)
+app.config.productionTip = false;
+
+app.use(i18n);
+app.use(BootstrapVue);
+app.use(LoadScript);
+app.use(Vuelidate);
+app.use(router);
+app.use(store);
 
 
 // initialize template, some jquery hacks
@@ -42,4 +40,4 @@ import("../public/sbadmin/vendor/fontawesome-free/css/all.min.css");
 
 // tmplate init end
 
-eventBus.mount('#app');
+app.mount('#app');
