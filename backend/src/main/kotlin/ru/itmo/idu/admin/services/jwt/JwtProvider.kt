@@ -31,9 +31,12 @@ public class JwtProvider {
 
     fun validateJwtToken(authToken: String): Boolean {
         try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken)
+            Jwts.parserBuilder()
+                .setSigningKey(jwtSecret)
+                .build()
+                .parseClaimsJws(authToken)
             return true
-        } catch (e: SignatureException) {
+        }catch (e: SignatureException) {
             logger.error("Invalid JWT signature -> Message: {} ", e)
         } catch (e: MalformedJwtException) {
             logger.error("Invalid JWT token -> Message: {}", e)
