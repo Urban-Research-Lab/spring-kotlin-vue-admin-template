@@ -12,7 +12,7 @@ enum class UserStatus {
 @Entity
 data class BanInfo(
         @Id
-        @GeneratedValue
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long,
 
         @ManyToOne
@@ -30,7 +30,7 @@ data class BanInfo(
 @Table(name = "\"user\"") // @link https://stackoverflow.com/questions/22256124/cannot-create-a-database-table-named-user-in-postgresql
 data class User(
         @Id
-        @GeneratedValue
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Long,
 
         @NotEmpty

@@ -19,7 +19,7 @@ enum class Permission {
 @Entity
 data class Role(
         @Id
-        @GeneratedValue
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Long,
 
         @Column(unique = true)
