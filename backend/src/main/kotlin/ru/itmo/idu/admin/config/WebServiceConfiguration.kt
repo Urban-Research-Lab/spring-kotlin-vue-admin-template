@@ -33,9 +33,9 @@ import org.springframework.web.client.RestTemplate
 class WebServiceConfiguration {
 
     @Bean
-    fun objectMapper(): ObjectMapper? {
+    fun objectMapper(): ObjectMapper {
         val om = ObjectMapper()
-        om.registerModule(KotlinModule())
+        om.registerModule(KotlinModule.Builder().build())
         om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
         return om
     }

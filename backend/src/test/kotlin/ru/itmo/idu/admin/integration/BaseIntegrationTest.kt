@@ -87,6 +87,7 @@ internal class TestConfig {
     }
 
     @Bean
+    @Primary
     fun mockMailSender(): JavaMailSender {
         return Mockito.mock(JavaMailSender::class.java)
     }

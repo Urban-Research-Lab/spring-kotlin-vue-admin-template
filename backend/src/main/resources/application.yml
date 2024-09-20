@@ -16,7 +16,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     username: admin
   jpa:
-    database-platform: org.hibernate.dialect.MariaDB102Dialect
+    database-platform: org.hibernate.dialect.MariaDBDialect
     hibernate:
       ddl-auto: update
   mail:
