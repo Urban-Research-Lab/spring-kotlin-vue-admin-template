@@ -67,6 +67,8 @@ class UserServiceIT : BaseIntegrationTest() {
 
         Assert.assertEquals(2, user.roles.size)
 
+        Assert.assertTrue(user.roles.contains(role2))
+        Assert.assertTrue(user.roles.contains(role3))
         Assert.assertFalse(user.roles.contains(role2))
         Assert.assertFalse(user.roles.contains(role3))
         Assert.assertFalse(user.roles.contains(role1))
