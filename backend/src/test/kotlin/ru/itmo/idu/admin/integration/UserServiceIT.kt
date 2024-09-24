@@ -69,7 +69,7 @@ class UserServiceIT : BaseIntegrationTest() {
 
         Assert.assertFalse(user.roles.contains(role2))
         Assert.assertFalse(user.roles.contains(role3))
-        Assert.assertFalse(user.roles.contains(role1))
+        Assert.assertTrue(user.roles.contains(role1))
     }
 
     @Test(expected = InsufficientPrivilegesException::class)
